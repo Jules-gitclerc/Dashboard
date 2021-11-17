@@ -1,23 +1,8 @@
 import React from 'react';
 import {Avatar, List, Grid, Typography, ListItem, ListItemAvatar, ListItemText} from "@mui/material";
 import {useHistory} from "react-router-dom";
-import ImageGallery from 'react-image-gallery';
-
-const images = [
-    {
-        original: 'https://picsum.photos/id/1018/1000/600/',
-        thumbnail: 'https://picsum.photos/id/1018/250/150/',
-    },
-    {
-        original: 'https://picsum.photos/id/1015/1000/600/',
-        thumbnail: 'https://picsum.photos/id/1015/250/150/',
-    },
-    {
-        original: 'https://picsum.photos/id/1019/1000/600/',
-        thumbnail: 'https://picsum.photos/id/1019/250/150/',
-    },
-];
-
+import "react-responsive-carousel/lib/styles/carousel.min.css"; // requires a loader
+import { Carousel } from 'react-responsive-carousel';
 
 function DisplayRedditMedia({data}) {
     if (data.isVideo) {
@@ -31,7 +16,11 @@ function DisplayRedditMedia({data}) {
 
     if (data.isGallery) {
         return <Grid container item xs={12}>
-            {JSON.stringify(data.media)}
+            <Carousel>
+                {data.media.map((item, index) => <div key={`${item} ${index}`}>
+                    <img src={item} alt={item} />
+                </div>)}
+            </Carousel>
         </Grid>;
     }
 
