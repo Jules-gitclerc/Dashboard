@@ -3,15 +3,10 @@ import {Route} from "react-router-dom";
 import {useRouteMatch} from "react-router";
 import {CircularProgress, Grid} from "@mui/material";
 
-/*
-<Route exact path={`${url}/`}
-                   render={() => <Redirect to={defaultRoute}/>}/> //todo reworking
- */
-
 const Profile = React.lazy(() => import('../Profile/Profile'));
-const Reddit = React.lazy(() => import('../Reddit/Reddit'));
+const Diagram = React.lazy(() => import('./Diagram/Diagram'));
 
-export default function Routes() {
+export default function Routes({items, setItems}) {
     const {url} = useRouteMatch()
 
     return <Suspense fallback={<Grid container justifyContent={"center"} alignItems={"center"}
@@ -21,8 +16,8 @@ export default function Routes() {
         <Route path={`${url}/Profile`}>
             <Profile/>
         </Route>
-        <Route path={`${url}/Reddit`}>
-            <Reddit/>
+        <Route exact path={`${url}/`}>
+            <Diagram items={items} setItems={setItems} />
         </Route>
     </Suspense>
 }

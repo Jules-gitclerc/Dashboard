@@ -1,12 +1,13 @@
-import {Box, Divider, Drawer, List, ListItem, ListItemIcon, ListItemText, Toolbar} from "@mui/material";
+import {Box, Divider, Drawer, List, ListItem, ListItemIcon, ListItemText, ListSubheader, Toolbar} from "@mui/material";
 import React from "react";
 import pagesConfig from "./pagesConfig";
 import {useHistory} from "react-router-dom";
 import {useRouteMatch} from "react-router";
+import widgetConfig from "../Widget/config";
 
 const drawerWidth = 200;
 
-export default function MenuDrawer() {
+export default function MenuDrawer({items, handleNewItem}) {
     const history = useHistory();
     const {url} = useRouteMatch()
 
@@ -20,23 +21,32 @@ export default function MenuDrawer() {
     >
         <Toolbar/>
         <Box sx={{overflow: 'auto'}}>
-            {pagesConfig.map(item => <div key={`Service = ${item.id}`}>
-                <List dense>
-                    <ListItem button onClick={() => history.push(`${url}${item.redirect}`)}>
+            <List dense>
+                {pagesConfig.map(item => <ListItem key={`Dash = ${item.id} ${item.name}`} button
+                              onClick={() => history.push(`${url}${item.redirect}`)}>
                         <ListItemIcon>
-                            <img alt={item.name} src={item.logo} style={{width: 30, height: 'auto'}}/>
+                            {item.icon}
                         </ListItemIcon>
                         <ListItemText primary={item.name}/>
-                    </ListItem>
-                    {item.widget.map(elem => <ListItem button key={`Widget = ${elem.id}`} onClick={() => history.push(`${url}${elem.redirect}`)}>
-                        <ListItemIcon>
-                            {elem.icon}
-                        </ListItemIcon>
-                        <ListItemText primary={elem.name}/>
                     </ListItem>)}
-                </List>
-                <Divider/>
-            </div>)}
+            </List>
+            <Divider/>
+            <List
+                component="nav"
+                subheader={
+                    <ListSubheader component="div">
+                        Services and Widget
+                    </ListSubheader>
+                }
+            >
+                {widgetConfig.map(item => <ListItem key={`Service = ${item.id}`} button
+                                                   onClick={() => {handleNewItem(item)}}>
+                    {/*<ListItemIcon>
+                        {item.icon}
+                    </ListItemIcon>*/}
+                    <ListItemText primary={item.label}/>
+                </ListItem>)}
+            </List>
         </Box>
     </Drawer>
 }

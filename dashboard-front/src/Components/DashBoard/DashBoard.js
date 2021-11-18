@@ -5,6 +5,7 @@ import MenuAppBar from "./MenuAppBar";
 import Routes from "./Routes";
 import {CircularProgress, createTheme} from "@mui/material"; /*adaptV4Theme*/
 import axios from "axios";
+import {ThemeProvider} from "@emotion/react";
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -14,17 +15,19 @@ const useStyles = makeStyles((theme) => ({
         flexGrow: 1,
         marginTop: 64,
         height: "calc(100vh - 64px)",
-        overflow: 'hidden'
+        overflow: 'hidden',
     },
+
 }))
 
 export default function DashBoard({handleTriggerConnected}) {
-    /*const [theme, setTheme] = useState(createTheme({
+    const [theme, setTheme] = useState(createTheme({
         palette: {
             mode: 'dark',
         }
-    }))*/
+    }))
     const [userData, setUserData] = useState(null);
+    const [items, setItems] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
     const classes = useStyles();
 
@@ -35,11 +38,11 @@ export default function DashBoard({handleTriggerConnected}) {
                 const response = await axios.get(`${process.env.REACT_APP_DASHBOARD_API}/userData`,
                     {'headers': {'Authorization': `Bearer  ${localStorage.getItem('token')}`}})
                 setUserData(response.data);
-                /*setTheme(createTheme({
+                setTheme(createTheme({
                     palette: {
-                        mode: 'dark',
+                        mode: 'light',
                     }
-                }))*/
+                }))
                 setIsLoading(false)
             } catch (err) {
                 handleTriggerConnected(false);
@@ -62,22 +65,18 @@ export default function DashBoard({handleTriggerConnected}) {
             Your are not identified please check your mail, in {userData.email}
         </div>
 
-    /*return (<ThemeProvider theme={theme}>
-        <div className={classes.root}>
-            <MenuAppBar userData={userData}/>
-            <MenuDrawer/>
-            <div className={classes.content}>
-                <Routes/>
-            </div>
-        </div>
-        </ThemeProvider>
-    )*/
-    return (<div className={classes.root}>
+    const handleNewItem = (model) => {
+        setItems([...items, model]);
+    }
+
+    return (<ThemeProvider theme={theme}>
+            <div className={classes.root}>
                 <MenuAppBar userData={userData}/>
-                <MenuDrawer/>
+                <MenuDrawer items={items} handleNewItem={handleNewItem}/>
                 <div className={classes.content}>
-                    <Routes/>
+                    <Routes items={items} setItems={setItems}/>
                 </div>
             </div>
+        </ThemeProvider>
     )
 }

@@ -29,7 +29,6 @@ function DisplayRedditMedia({data}) {
             <img alt={data.author + data.id} src={data.media} style={{width: '100%'}}/>
         </Grid>
 
-
     return null;
 }
 
@@ -62,5 +61,6 @@ export default function CardPosts({data}) {
             </Typography>
         </Grid>
         <DisplayRedditMedia data={data} />
+
     </Grid>
 }
