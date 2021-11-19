@@ -1,6 +1,7 @@
-export const REDDIT_POSTS = 1
-export const REDDIT_SEARCH = 2
-export const REDDIT_PROFILE = 3
+export const REDDIT = 10
+export const REDDIT_POSTS = 11
+export const REDDIT_SEARCH = 12
+export const REDDIT_PROFILE = 13
 
 let widgetConfig = [
     {
@@ -26,4 +27,19 @@ let widgetConfig = [
     }
 ]
 
-export default widgetConfig;
+
+let serviceConfig = [
+    {
+        id: REDDIT,
+        label: 'Reddit',
+        logo: 'Images/LogoApi/reddit.png',
+        widget: [
+            widgetConfig.find(elem => elem.id === REDDIT_POSTS),
+            widgetConfig.find(elem => elem.id === REDDIT_SEARCH),
+            widgetConfig.find(elem => elem.id === REDDIT_PROFILE),
+        ]
+    }
+]
+
+
+export default serviceConfig;
