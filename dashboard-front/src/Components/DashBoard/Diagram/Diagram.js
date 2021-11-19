@@ -2,7 +2,7 @@ import React, {useState} from 'react'
 import { Responsive as ResponsiveGridLayout } from "react-grid-layout";
 import 'react-grid-layout/css/styles.css';
 import 'react-resizable/css/styles.css';
-import {Divider, Grid, IconButton, Paper} from "@mui/material";
+import {Avatar, Divider, Grid, IconButton, Paper} from "@mui/material";
 import CloseIcon from '@mui/icons-material/Close';
 
 function getFromLS(key) {
@@ -52,6 +52,9 @@ export default function Diagram({items, setItems}) {
                         </Grid>
                         <Grid item>
                             {key.label}
+                        </Grid>
+                        <Grid item>
+                            <Avatar alt={key.label} src={key.logoService} style={{height: 30, width: 30}}/>
                         </Grid>
                     </Grid>
                     <Divider/>
