@@ -1,6 +1,6 @@
 import {
     Avatar,
-    Box, Collapse,
+    Box, Button, Collapse,
     Divider,
     Drawer,
     List,
@@ -12,10 +12,14 @@ import {
 } from "@mui/material";
 import React, {useState} from "react";
 import pagesConfig from "./pagesConfig";
-import {useHistory} from "react-router-dom";
+import {Redirect, useHistory} from "react-router-dom";
 import {useRouteMatch} from "react-router";
 import serviceConfig from "../Widget/config";
 import {ExpandLess, ExpandMore} from "@mui/icons-material";
+import LogoutIcon from "@mui/icons-material/Logout";
+import axios from "axios";
+import AlertError from "../Tools/AlertError";
+import AddIcon from '@mui/icons-material/Add';
 
 const drawerWidth = 200;
 
@@ -27,26 +31,52 @@ function CollapseServiceWidget({data, handleNewItem, items}) {
         setOpenCollapse(!openCollapse);
     };
 
-    return <ListItem button onClick={handleClickCollapse}>
+    return <><ListItem button onClick={handleClickCollapse}>
         <ListItemIcon>
-            <Avatar src={data.logo} alt={`${data.label} ${data.id}`} />
+            <Avatar src={data.logo} alt={`${data.label} ${data.id}`} style={{height: 30, width: 30}}/>
         </ListItemIcon>
         <ListItemText primary={data.label}/>
-        {openCollapse ? <ExpandLess /> : <ExpandMore />}
-        <Collapse in={openCollapse} timeout="auto" unmountOnExit>
-            <List component="div" disablePadding>
-                {data.widget.map(item => <ListItemButton disabled={items.indexOf(item)} key={`Widget ${item.id}`} sx={{ pl: 4 }} onClick={() => {handleNewItem(item)}}>
-                    <ListItemText primary={item.label} />
-                </ListItemButton>)}
-            </List>
-        </Collapse>
+        {openCollapse ? <ExpandLess/> : <ExpandMore/>}
     </ListItem>
+    <Collapse in={openCollapse} timeout="auto" unmountOnExit>
+        <List component="div" disablePadding dense style={{marginLeft: 20}}>
+            {data.widget.map(item => <ListItemButton disabled={!!items.find(elem => elem.id === item.id)} key={`Widget ${item.id}`} onClick={() => {
+                handleNewItem(item)
+            }}>
+                <ListItemIcon>
+                    {item.icon}
+                </ListItemIcon>
+                <ListItemText primary={item.label}/>
+            </ListItemButton>)}
+        </List>
+    </Collapse></>
 }
 
 
 export default function MenuDrawer({items, handleNewItem}) {
     const history = useHistory();
-    const {url} = useRouteMatch()
+    const {url} = useRouteMatch();
+    const [isLogout, setIsLogout] = useState(false);
+    const [isError, setIsError] = useState(false);
+
+    function clientDisconnect() {
+        (async () => {
+            try {
+                await axios.post(`${process.env.REACT_APP_DASHBOARD_API}/disconnect`, {},
+                    {'headers': {'Authorization': `Bearer  ${localStorage.getItem('token')}`}})
+                setIsLogout(true);
+            } catch (err) {
+                if (err.response) {
+                    setIsError(true);
+                }
+            }
+        })()
+    }
+
+    if (isLogout) {
+        localStorage.clear();
+        return <Redirect to={'/'}/>
+    }
 
     return <Drawer
         variant="permanent"
@@ -57,18 +87,20 @@ export default function MenuDrawer({items, handleNewItem}) {
         }}
     >
         <Toolbar/>
+        <AlertError isError={isError} setIsError={setIsError}/>
         <Box sx={{overflow: 'auto'}}>
             <List dense>
                 {pagesConfig.map(item => <ListItem key={`Dash = ${item.id} ${item.name}`} button
-                              onClick={() => history.push(`${url}${item.redirect}`)}>
-                        <ListItemIcon>
-                            {item.icon}
-                        </ListItemIcon>
-                        <ListItemText primary={item.name}/>
-                    </ListItem>)}
+                                                   onClick={() => history.push(`${url}${item.redirect}`)}>
+                    <ListItemIcon>
+                        {item.icon}
+                    </ListItemIcon>
+                    <ListItemText primary={item.name}/>
+                </ListItem>)}
             </List>
             <Divider/>
             <List
+                dense
                 component="nav"
                 subheader={
                     <ListSubheader component="div">
@@ -76,7 +108,22 @@ export default function MenuDrawer({items, handleNewItem}) {
                     </ListSubheader>
                 }
             >
-                {serviceConfig.map(item => <CollapseServiceWidget key={`Service = ${item.id}`} data={item} handleNewItem={handleNewItem} items={items} />)}
+                {serviceConfig.map(item => <CollapseServiceWidget key={`Service = ${item.id}`} data={item}
+                                                                  handleNewItem={handleNewItem} items={items}/>)}
+                <ListItem>
+                    <Button startIcon={<AddIcon />} fullWidth variant={'contained'} style={{padding: 0, borderRadius: 10}}>
+                        More Service
+                    </Button>
+                </ListItem>
+            </List>
+            <Divider/>
+            <List component="nav" dense>
+                <ListItemButton onClick={() => clientDisconnect()}>
+                    <ListItemIcon>
+                        <LogoutIcon />
+                    </ListItemIcon>
+                    <ListItemText primary="Logout" />
+                </ListItemButton>
             </List>
         </Box>
     </Drawer>

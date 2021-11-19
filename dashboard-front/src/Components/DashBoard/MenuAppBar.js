@@ -2,7 +2,7 @@ import React, {useState} from "react";
 import {
     AppBar,
     Avatar,
-    Grid,
+    Grid, IconButton,
     List,
     ListItem,
     ListItemAvatar,
@@ -11,6 +11,7 @@ import {
     Typography
 } from "@mui/material";
 import MenuClient from "./MenuClient/MenuClient";
+import MenuIcon from '@mui/icons-material/Menu';
 
 export default function MenuAppBar({userData}) {
     const [anchorEl, setAnchorEl] = useState(null);
@@ -26,6 +27,11 @@ export default function MenuAppBar({userData}) {
     return <AppBar position="fixed" sx={{ zIndex: (theme) => theme.zIndex.drawer + 1 }}>
         <Toolbar>
             <Grid container item xs={12} justifyContent={'space-between'} alignItems={'center'} style={{height: '100%'}}>
+                <Grid container item xs={1} style={{height: '100%'}} alignItems={'center'} justifyContent={'center'} direction={'column'}>
+                    <IconButton>
+                        <MenuIcon/>
+                    </IconButton>
+                </Grid>
                 <Grid container item xs={1} style={{height: '100%'}} alignItems={'center'} justifyContent={'center'} direction={'column'}>
                     <img alt={'yoda'} src={'/Images/yodapetit.png'} style={{height: '30px', width: 'auto'}}/>
                     <Typography variant="button" noWrap component="div">
