@@ -1,14 +1,9 @@
-import React, {useEffect, useState} from 'react';
-import {
-    CircularProgress,
-    Grid,
-    TextField
-} from "@mui/material";
-import AlertError from "../../Tools/AlertError";
-import axios from "axios";
-import Subreddit from "./Subreddit/Subreddit";
+import React, {useEffect, useState} from 'react'
+import {CircularProgress, List, Grid, TextField} from "@mui/material";
+import AlertError from "../../../Tools/AlertError";
+import SubredditItem from './SubredditItem';
 
-export default function Search() {
+export default function Search({handleConnected}) {
     const [search, setSearch] = useState('');
     const [isLoading, setIsLoading] = useState(false);
     const [isError, setIsError] = useState(false);
@@ -33,45 +28,37 @@ export default function Search() {
                         tab.push({
                             subscribers: item.subscriber_count,
                             logo: item.icon_img,
-                            activeUser: item.active_user_count,
                             name: item.name,
                         })
                     })
                 })
-                let dataJson = []
-                for (const item in tab) {
-                    const response = await axios.get(`https://oauth.reddit.com/r/${tab[item].name}/about`, {'headers': {'Authorization': `Bearer  ${localStorage.getItem('JWTReddit')}`}});
-                    console.log(response.data);
-                    dataJson.push({
-                        name: response.data.data.display_name,
-                        title: response.data.data.title,
-                        urlBanner: response.data.data.banner_background_image.replaceAll("amp;", ""),
-                        logo: response.data.data.icon_img.replaceAll("amp;", ""),
-                        subscriber: response.data.data.subscribers,
-                        isSub: response.data.data.user_is_subscriber,
-                    })
-                }
-                setData(dataJson);
+                setData(tab);
                 setIsLoading(false);
             } catch (err) {
                 if (err.response) {
+                    if (err.response.status === 401) {
+                        localStorage.removeItem('JWTReddit')
+                        handleConnected(false)
+                    }
                     setIsLoading(false);
                     setIsError(true);
                 }
             }
         })()
-    }, [search])
+    }, [search, handleConnected])
 
-    return <Grid container item xs={12} style={{height: '100%'}}>
+    return <Grid container item xs={12} style={{height: '100%', display: 'block'}}>
         <AlertError isError={isError} setIsError={setIsError}/>
-        <Grid container item xs={4} style={{padding: 10, height: 68}}>
+        <Grid container item xs={12} style={{padding: 10, height: 68}} >
             <TextField fullWidth label={'Search'} type={'search'} variant={'outlined'} value={search}
                        onChange={(e) => setSearch(e.target.value)}/>
         </Grid>
         {isLoading ? <Grid container item xs={12} justifyContent={'center'}>
             <CircularProgress/>
-        </Grid> : <Grid container item xs={12} style={{height: 'calc(100% - 68px)', overflow: 'auto'}}>
-            {data.map(item => <Subreddit key={`${item.name} ${item.title}`} data={item} setIsError={setIsError}/>)}
+        </Grid> : <Grid container item xs={12} style={{height: 'calc(100% - 115px)', overflow: 'auto'}}>
+            <List dense>
+                {data.map(item => <SubredditItem key={`${item.name} ${item.subscribers}`} data={item} setIsError={setIsError}/>)}
+            </List>
         </Grid>}
 
     </Grid>

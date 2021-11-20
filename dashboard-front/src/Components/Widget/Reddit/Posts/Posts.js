@@ -1,12 +1,12 @@
-import React, {useEffect, useState} from "react";
-import {Chip, CircularProgress, Grid, Paper} from "@mui/material";
-import AlertError from "../../Tools/AlertError";
+import React, {useEffect, useState} from 'react'
+import {Chip, CircularProgress, Grid} from "@mui/material";
+import LocalFireDepartmentIcon from "@mui/icons-material/LocalFireDepartment";
 import axios from "axios";
-import CardPosts from "./CardPosts";
 import moment from "moment";
-import LocalFireDepartmentIcon from '@mui/icons-material/LocalFireDepartment';
+import AlertError from "../../../Tools/AlertError";
+import CardPosts from "./CardPosts";
 import {LoadingButton} from "@mui/lab";
-import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
+import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 
 let dataSearch = [
     {
@@ -31,13 +31,13 @@ let dataSearch = [
     },
 ]
 
-export default function Posts() {
+export default function Posts({handleConnected}) {
     const [filter, setFilter] = useState(dataSearch[0].value);
-    const [data, setData] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
-    const [isError, setIsError] = useState(false)
-    const [after, setAfter] = useState('')
     const [isMoreData, setIsMoreData] = useState(false);
+    const [isError, setIsError] = useState(false);
+    const [after, setAfter] = useState('');
+    const [data, setData] = useState([]);
 
     function getDataFromReddit() {
         (async () => {
@@ -71,7 +71,9 @@ export default function Posts() {
                         let dataGallery = []
 
                         body.isGallery = true
-                        item.data.gallery_data.items.forEach(item => {ref.push(item.media_id)})
+                        item.data.gallery_data.items.forEach(item => {
+                            ref.push(item.media_id)
+                        })
                         if (ref.length > 0) {
                             for (let elem in ref) {
                                 let img = item.data.media_metadata[ref[elem]].s.u
@@ -138,11 +140,11 @@ export default function Posts() {
                         let dataGallery = []
 
                         body.isGallery = true
-                        item.data.gallery_data.items.forEach(item => {ref.push(item.media_id)})
+                        item.data.gallery_data.items.forEach(item => {
+                            ref.push(item.media_id)
+                        })
                         if (ref.length > 0) {
                             for (let elem in ref) {
-
-                                //console.log(item.data.media_metadata)
                                 let img = item.data.media_metadata[ref[elem]].s.u
 
                                 dataGallery.push(img.replaceAll("amp;", ""))
@@ -163,46 +165,45 @@ export default function Posts() {
             } catch (err) {
                 console.log(err);
                 if (err.response) {
+                    if (err.response.status === 401) {
+                        localStorage.removeItem('JWTReddit')
+                        handleConnected(false)
+                    }
                     setIsLoading(false);
                     setIsError(true);
                 }
             }
         })()
-    }, [filter])
+    }, [filter, handleConnected])
 
-    return <Grid container item xs={12} style={{height: '100%'}} justifyContent={'center'}>
+
+    return <Grid container item xs={12} style={{height: '100%', display: 'block'}}>
         <AlertError isError={isError} setIsError={setIsError}/>
-        <Paper elevation={6} style={{
-            width: '100%',
-            height: '68px',
-            marginBottom: 30,
-            borderRadius: 0,
-            position: 'sticky',
-            top: 0,
-            zIndex: 9
-        }}>
-            <Grid container item xs={12} sm={12} md={5} style={{height: '100%'}} alignItems={'center'}
-                  justifyContent={'space-around'}>
-                {
-                    dataSearch.map((item, index) => <Chip disabled={isLoading || isMoreData} onClick={() => setFilter(item.value)}
-                                                          key={`${item.name} == ${index}`} icon={item.icon}
-                                                          label={item.label}/>)
-                }
-            </Grid>
-        </Paper>
-        {isLoading ? <Grid container item xs={12} style={{height: 'calc(100% - 68px)'}} justifyContent={'center'} alignItems={'center'}>
-            <CircularProgress/>
-        </Grid> : <Grid container item xs={12} style={{height: 'calc(100% - 68px)', overflow: 'auto'}} justifyContent={'center'}>
+        <Grid container item xs={12} justifyContent={'space-around'} alignItems={'center'} style={{height: 40}}>
+            {
+                dataSearch.map((item, index) => <Chip disabled={isLoading || isMoreData}
+                                                      onClick={() => setFilter(item.value)}
+                                                      key={`${item.name} == ${index}`} icon={item.icon}
+                                                      label={item.label}/>)
+            }
+        </Grid>
+        <Grid container item xs={12} style={{height: 'calc(100% - 85px)', overflow: 'auto'}}>
+            {isLoading ? <Grid container item xs={12} justifyContent={'center'}
+                               alignItems={'center'}>
+                <CircularProgress/>
+            </Grid> : <Grid container item xs={12} justifyContent={'space-around'} alignItems={'center'}>
+                {data.map((item, index) => <Grid key={`Posts = ${item.id} + ${item.author} + ${index}`} item xs={12}>
+                    <CardPosts data={item} key={`Posts = ${item.id} + ${item.author} + ${item.title}`}/>
+                </Grid>)}
+            </Grid>}
 
-            {data.map((item, index) => <Grid key={`Posts = ${item.id} + ${item.author} + ${index}`} item xs={12} sm={8} lg={8} md={7}>
-                <CardPosts data={item} key={`Posts = ${item.id} + ${item.author} + ${item.title}`}/>
-            </Grid>)}
-
-            <Grid container item xs={12} style={{height: 100}} alignItems={'baseline'} justifyContent={'center'}>
-                <LoadingButton size={'small'} loading={isMoreData} color={'primary'} onClick={() => getDataFromReddit()} endIcon={<KeyboardArrowDownIcon />}>
-                    Next reddit posts
+            {!isLoading &&
+            <Grid container item xs={12} alignItems={'baseline'} justifyContent={'center'}>
+                <LoadingButton size={'small'} loading={isMoreData} color={'primary'} onClick={() => getDataFromReddit()}
+                               endIcon={<KeyboardArrowDownIcon/>}>
+                    More reddit posts
                 </LoadingButton>
-            </Grid>
-        </Grid>}
+            </Grid>}
+        </Grid>
     </Grid>
 }

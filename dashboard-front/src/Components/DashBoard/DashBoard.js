@@ -69,14 +69,13 @@ export default function DashBoard({handleTriggerConnected}) {
         setItems([...items, model]);
     }
 
-    return (<ThemeProvider theme={theme}>
-            <div className={classes.root}>
-                <MenuAppBar userData={userData}/>
-                <MenuDrawer items={items} handleNewItem={handleNewItem}/>
-                <div className={classes.content}>
-                    <Routes items={items} setItems={setItems}/>
-                </div>
+    return <ThemeProvider theme={theme}>
+        <div className={classes.root}>
+            <MenuAppBar userData={userData}/>
+            <MenuDrawer items={items} handleNewItem={handleNewItem}/>
+            <div className={classes.content}>
+                <Routes items={items} setItems={setItems}/>
             </div>
-        </ThemeProvider>
-    )
+        </div>
+    </ThemeProvider>
 }

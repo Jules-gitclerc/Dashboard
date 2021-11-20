@@ -27,16 +27,18 @@ export default function MenuAppBar({userData}) {
     return <AppBar position="fixed" sx={{ zIndex: (theme) => theme.zIndex.drawer + 1 }}>
         <Toolbar>
             <Grid container item xs={12} justifyContent={'space-between'} alignItems={'center'} style={{height: '100%'}}>
-                <Grid container item xs={1} style={{height: '100%'}} alignItems={'center'} justifyContent={'center'} direction={'column'}>
-                    <IconButton>
-                        <MenuIcon/>
-                    </IconButton>
-                </Grid>
-                <Grid container item xs={1} style={{height: '100%'}} alignItems={'center'} justifyContent={'center'} direction={'column'}>
-                    <img alt={'yoda'} src={'/Images/yodapetit.png'} style={{height: '30px', width: 'auto'}}/>
-                    <Typography variant="button" noWrap component="div">
-                        YODASH
-                    </Typography>
+                <Grid container item xs={2} alignItems={'center'} justifyContent={"space-between"}>
+                    <Grid container item xs={1} style={{height: '100%'}} alignItems={'center'} justifyContent={'center'} direction={'column'}>
+                        <IconButton>
+                            <MenuIcon/>
+                        </IconButton>
+                    </Grid>
+                    <Grid container item xs={7} style={{height: '100%', border: '1px solid', padding: 8, borderRadius: 20}} alignItems={'center'} justifyContent={'space-around'}>
+                        <img alt={'yoda'} src={'/Images/yodapetit.png'} style={{height: '30px', width: 'auto'}}/>
+                        <Typography variant="button" noWrap component="div" style={{fontWeight: 'bold'}}>
+                            YODASH
+                        </Typography>
+                    </Grid>
                 </Grid>
                 <Grid item>
                     <List dense style={{padding: 0}}>
