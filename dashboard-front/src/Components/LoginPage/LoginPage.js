@@ -23,7 +23,7 @@ export default function LoginPage({handleTriggerConnected}) {
     const responseGoogle = (response) => {
         console.log(response);
         (async () => {
-            await loginInSerer('google', response.name, response.googleId, response.email)
+            await loginInSerer('google', response.profileObj.name, response.profileObj.googleId, response.profileObj.email)
         })()
     }
 
@@ -120,7 +120,7 @@ export default function LoginPage({handleTriggerConnected}) {
             />
             <GoogleLogin
                 clientId={googleClientId}
-                buttonText="Login"
+                buttonText="Sign in"
                 onSuccess={responseGoogle}
                 onFailure={responseGoogle}
                 cookiePolicy={'single_host_origin'}

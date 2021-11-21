@@ -8,7 +8,7 @@ function createNewAccount(body) {
     return new Promise((resolve, reject) => {
         try {
             bcrypt.hash(body.password, 10, async (err, hash) => {
-                let sqlRequest = `INSERT INTO User (username, first_name, last_name, email, password, phone, is_identified) VALUES ('${body.username}', '${body.firstName}', '${body.lastName}', '${body.mail}', '${hash}', '${body.phone}', false);`
+                let sqlRequest = `INSERT INTO User (username, first_name, last_name, email, password, phone, is_identified, avatar, auth) VALUES ('${body.username}', '${body.firstName}', '${body.lastName}', '${body.mail}', '${hash}', '${body.phone}', false, '${body.avatar}', '${body.auth}');`
                 await database.request(sqlRequest);
                 resolve();
             })
@@ -32,10 +32,39 @@ function getUserId(body) {
     })
 }
 
+function getUserGoogle(body) {
+    return new Promise(async (resolve, reject) => {
+        try {
+            let sqlRequest = `SELECT * FROM User WHERE email='${body.mail}' AND auth='${body.auth}';`
+            let data = await database.request(sqlRequest);
+            resolve(data[0].user_id);
+        } catch (err) {
+            console.log('err', err)
+            reject(err)
+        }
+    })
+}
+
 function checkUsernameIsAlreadySet(body) {
     return new Promise(async (resolve, reject) => {
         try {
             let sqlRequest = `SELECT * FROM User WHERE username='${body.username}';`
+            let data = await database.request(sqlRequest);
+            if (data.length > 0)
+                resolve(true)
+            else
+                resolve(false)
+        } catch (err) {
+            console.log('err', err)
+            reject(err)
+        }
+    })
+}
+
+function checkGoogleIsSet(body) {
+    return new Promise(async (resolve, reject) => {
+        try {
+            let sqlRequest = `SELECT * FROM User WHERE email='${body.mail}' AND auth='${body.auth}';`
             let data = await database.request(sqlRequest);
             if (data.length > 0)
                 resolve(true)
@@ -88,15 +117,26 @@ function identificationMail(mail, userId, username) {
 }
 
 module.exports = async function (req, res) {
-    let isUsernameIsSet = await checkUsernameIsAlreadySet(req.body);
+    let isUsernameIsSet;
+
+    if (req.body.auth == 'google')
+        isUsernameIsSet = await checkGoogleIsSet(req.body);
+    else
+        isUsernameIsSet = await checkUsernameIsAlreadySet(req.body);
 
     if (isUsernameIsSet) {
         res.json({
-            error: 'The username already exists',
+            error: 'This account already exists',
         }).status(200)
     } else {
         await createNewAccount(req.body);
-        let id = await getUserId(req.body);
+        let id;
+
+        if (req.body.auth == 'google')
+            id = await getUserGoogle(req.body);
+        else
+            id = await getUserId(req.body);
+
         identificationMail(req.body.mail, id, req.body.username);
         res.json({
             access_token: token.generateToken(req.body.username, id),

@@ -44,7 +44,7 @@ export default function MenuAppBar({userData}) {
                     <List dense style={{padding: 0}}>
                         <ListItem button onClick={handleOpenMenuPopover}>
                             <ListItemAvatar>
-                                <Avatar alt={userData.username} />
+                                <Avatar alt={userData.username} src={userData.avatar}/>
                             </ListItemAvatar>
                             <ListItemText
                                 primary={userData.username}

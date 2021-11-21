@@ -9,15 +9,16 @@ import {
     TextField,
     Typography,
     List,
-    ListItem, ListItemIcon, ListItemText, FormControlLabel, Checkbox
+    ListItem, ListItemIcon, ListItemText, FormControlLabel, Checkbox, CircularProgress
 } from "@mui/material";
 import axios from "axios";
 import AlertError from "../Tools/AlertError";
 import {LoadingButton} from "@mui/lab";
 import PersonIcon from '@mui/icons-material/Person';
 import DesignServicesIcon from '@mui/icons-material/DesignServices';
-import pagesConfig from "../DashBoard/pagesConfig";
 import DataSend from "./DataSend";
+import serviceConfig from "../Widget/config";
+import {GoogleLogin} from "react-google-login";
 
 /*
 useEffect(() => {
@@ -26,7 +27,7 @@ useEffect(() => {
         (async () => {
             try {
                 setIsLoading(true)
-                const response = await axios.get(`${process.env.REACT_APP_KEYBOON_API}/app/patch/notes?isAdmin=true`, {'headers': {'Authorization': `Bearer  ${process.env.REACT_APP_BEARER || localStorage.getItem('JWT')}`}})
+                request !!!!!!
                 if (isMounted.current)
                     setData(response.data)
                 setIsLoading(false)
@@ -39,7 +40,7 @@ useEffect(() => {
         })()
         return () => {
             isMounted.current = false
-            source.cancel("patch note got unmounted");
+            source.cancel("name got unmounted");
         };
     }, [isMounted, isReload])
  */
@@ -53,6 +54,8 @@ export default function CreateAccount({handleTriggerConnected}) {
     const [phone, setPhone] = useState("");
     const [isLoading, setIsLoading] = useState(false);
     const [isError, setIsError] = useState(false);
+    const [avatar, setAvatar] = useState('');
+    const [auth, setAuth] = useState('local');
 
     const [isSend, setIsSend] = useState(false);
 
@@ -62,18 +65,46 @@ export default function CreateAccount({handleTriggerConnected}) {
     const [isConfirmationPasswordCorrect, setIsConfirmationPasswordCorrect] = useState(false);
     const [services, setServices] = useState([]);
 
+    const [isBigLoading, setIsBigLoading] = useState(false);
+    const [googleClientId, setGoogleClientId] = useState('');
+
     useEffect(() => {
         let pages = []
-        pagesConfig.forEach((elem) => {
+        serviceConfig.forEach((elem) => {
             pages.push({
-                name: elem.name,
+                name: elem.label,
                 logo: elem.logo,
                 id: elem.id,
                 checked: true,
             })
         })
         setServices(pages);
+        (async () => {
+            try {
+                setIsBigLoading(true);
+                const response = await axios.get(`${process.env.REACT_APP_DASHBOARD_API}/google/O-Auth`);
+                setGoogleClientId(response.data.googleClientId);
+                setIsBigLoading(false);
+            } catch (err) {
+                alert('Server not connected')
+            }
+        })()
     }, [])
+
+    const responseGoogle = (response) => {
+        console.log(response);
+        setAuth('google')
+        setUsername(response.profileObj.name)
+        setMail(response.profileObj.email)
+        setLastName(response.profileObj.familyName)
+        setFirstName(response.profileObj.givenName)
+        setAvatar(response.profileObj.imageUrl)
+        setPassword(response.profileObj.googleId)
+        setConfirmationPassword(response.profileObj.googleId)
+        setIsPasswordCorrect(true)
+        setIsConfirmationPasswordCorrect(true)
+        setPhone('00 00 00 00 00')
+    }
 
     const onSubmit = (e) => {
         e.preventDefault();
@@ -88,6 +119,8 @@ export default function CreateAccount({handleTriggerConnected}) {
                 username: username,
                 password: password,
                 mail: mail,
+                avatar: avatar,
+                auth: auth,
                 phone: phone,
                 services: services,
             }
@@ -130,6 +163,11 @@ export default function CreateAccount({handleTriggerConnected}) {
             setIsConfirmationPasswordCorrect(false)
     }
 
+    if (isBigLoading)
+        return <Grid container item xs={12} style={{height: '100vh'}} alignItems={'center'} justifyContent={'center'}>
+            <CircularProgress/>
+        </Grid>
+
     return <Grid container component={'form'} onSubmit={onSubmit} justifyContent={'center'}
                  sx={{height: '100vh', width: '100vw'}}>
         <AlertError isError={isError} setIsError={setIsError}/>
@@ -152,61 +190,73 @@ export default function CreateAccount({handleTriggerConnected}) {
                   style={{height: '100%', padding: 20, overflow: 'auto'}}>
 
                 <Grid container item xs={12} justifyContent={'center'} alignItems={'center'} direction={'column'}>
-                    <Avatar alt={'yoda'} src={'/Images/yodapetit.png'} style={{height: 90, width: 232}} />
+                    <Avatar alt={'yoda'} src={'/Images/yodapetit.png'} style={{height: 90, width: 232}}/>
                     <Typography variant='h4'>
                         Sign Up
                     </Typography>
                 </Grid>
 
                 <Grid container item xs={12} style={{height: '410px'}} alignItems={'center'}>
-                    <Grid item xs={12}>
-                        <List dense style={{padding: 0}}>
-                            <ListItem>
-                                <ListItemIcon>
-                                    <PersonIcon fontSize={'large'}/>
-                                </ListItemIcon>
-                                <ListItemText primary={
-                                    <React.Fragment>
-                                        <Typography
-                                            style={{fontWeight: 'bold'}}
-                                        >
-                                            User information
-                                        </Typography>
-                                    </React.Fragment>
-                                } secondary={
-                                    <React.Fragment>
-                                        <Typography
-                                            variant="caption"
-                                        >
-                                            Set your user information
-                                        </Typography>
-                                    </React.Fragment>
-                                }/>
-                            </ListItem>
-                        </List>
-                        <Divider/>
+                    <Grid container item xs={12} justifyContent={'space-between'} alignItems={'center'} style={{borderBottom: '1px solid lightgrey'}}>
+                        <Grid item>
+                            <List dense style={{padding: 0}}>
+                                <ListItem>
+                                    <ListItemIcon>
+                                        <PersonIcon fontSize={'large'}/>
+                                    </ListItemIcon>
+                                    <ListItemText primary={
+                                        <React.Fragment>
+                                            <Typography
+                                                style={{fontWeight: 'bold'}}
+                                            >
+                                                User information
+                                            </Typography>
+                                        </React.Fragment>
+                                    } secondary={
+                                        <React.Fragment>
+                                            <Typography
+                                                variant="caption"
+                                            >
+                                                Set your user information
+                                            </Typography>
+                                        </React.Fragment>
+                                    }/>
+                                </ListItem>
+                            </List>
+                        </Grid>
+                        <Grid item>
+                            <GoogleLogin
+                                clientId={googleClientId}
+                                buttonText="Sign up with your google account"
+                                onSuccess={responseGoogle}
+                                onFailure={responseGoogle}
+                                cookiePolicy={'single_host_origin'}
+                            />
+                        </Grid>
                     </Grid>
+
 
                     <Grid container item xs={12}>
                         <Grid container item xs={3} alignItems={'center'} justifyContent={'center'}>
                             <Avatar
                                 alt={username}
+                                src={avatar}
                                 sx={{width: 110, height: 110}}
                             />
                         </Grid>
                         <Grid container item xs={9} alignItems={'center'} spacing={1}>
                             <Grid container item xs={12} justifyContent={'space-between'} spacing={2}>
                                 <Grid item xs={6}>
-                                    <TextField fullWidth required={true} label={'First Name'} value={firstName}
+                                    <TextField disabled={auth === 'google'} fullWidth required={true} label={'First Name'} value={firstName}
                                                onChange={(e) => setFirstName(e.target.value)}/>
                                 </Grid>
                                 <Grid item xs={6}>
-                                    <TextField fullWidth required={true} label={'Last Name'} value={lastName}
+                                    <TextField disabled={auth === 'google'} fullWidth required={true} label={'Last Name'} value={lastName}
                                                onChange={(e) => setLastName(e.target.value)}/>
                                 </Grid>
                             </Grid>
                             <Grid item xs={12}>
-                                <TextField fullWidth required={true} label={'Username'} value={username}
+                                <TextField disabled={auth === 'google'} fullWidth required={true} label={'Username'} value={username}
                                            onChange={(e) => setUsername(e.target.value)}/>
                             </Grid>
                         </Grid>
@@ -214,12 +264,12 @@ export default function CreateAccount({handleTriggerConnected}) {
 
                     <Grid container item xs={12} spacing={2}>
                         <Grid item xs={6}>
-                            <TextField fullWidth required={true} type={hidden ? 'password' : 'text'} label={'Password'}
+                            <TextField disabled={auth === 'google'} fullWidth required={true} type={hidden ? 'password' : 'text'} label={'Password'}
                                        value={password}
                                        onChange={onPasswordChange}/>
                         </Grid>
                         <Grid item xs={6}>
-                            <TextField fullWidth required={true} type={hidden ? 'password' : 'text'}
+                            <TextField disabled={auth === 'google'} fullWidth required={true} type={hidden ? 'password' : 'text'}
                                        label={'Confirmation Password'} value={confirmationPassword}
                                        onChange={onConfirmationPasswordChange}/>
                         </Grid>
@@ -249,17 +299,17 @@ export default function CreateAccount({handleTriggerConnected}) {
 
                     <Grid container item xs={12}>
                         <FormControlLabel control={
-                            <Checkbox checked={!hidden} onChange={() => setHidden(prevState => !prevState)}/>
+                            <Checkbox disabled={auth === 'google'} checked={!hidden} onChange={() => setHidden(prevState => !prevState)}/>
                         } label="Show password"/>
                     </Grid>
 
                     <Grid container item xs={12} spacing={2}>
                         <Grid item xs={7}>
-                            <TextField fullWidth required={true} label={'Mail'} value={mail}
+                            <TextField disabled={auth === 'google'} fullWidth required={true} label={'Mail'} value={mail}
                                        onChange={(e) => setMail(e.target.value)}/>
                         </Grid>
                         <Grid item xs={5}>
-                            <TextField fullWidth required={true} label={'Phone'} value={phone}
+                            <TextField disabled={auth === 'google'} fullWidth required={true} label={'Phone'} value={phone}
                                        onChange={(e) => setPhone(e.target.value)}/>
                         </Grid>
                     </Grid>
