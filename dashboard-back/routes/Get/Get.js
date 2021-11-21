@@ -12,9 +12,14 @@ module.exports = function (app) {
      */
     app.get('/userData', token.checkTokenMiddleware, require('./User/User'));
     app.get('/accessToken', require('./User/AccessToken'));
-    app.get('/google/O-Auth', require('./User/GoogleAuth'));
+
     /*
         Reddit
      */
     app.get('/apiRedditInfo', token.checkTokenMiddleware, require('./Reddit/ClientApiInfo'));
+
+    /*
+        Google
+    */
+    app.get('/google/O-Auth', require('./Google/GoogleAuth'));
 }
