@@ -1,6 +1,6 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import {
-    Avatar,
+    Avatar, CircularProgress,
     CssBaseline,
     Grid,
     Link,
@@ -10,38 +10,70 @@ import {
 import axios from "axios";
 import {LoadingButton} from "@mui/lab";
 import AlertError from "../Tools/AlertError";
+import { GoogleLogin } from 'react-google-login';
 
 export default function LoginPage({handleTriggerConnected}) {
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
     const [isLoading, setIsLoading] = useState(false);
+    const [isBigLoading, setIsBigLoading] = useState(false);
+    const [googleClientId, setGoogleClientId] = useState('');
     const [isError, setIsError] = useState(false);
 
-    const onSubmit = (e) => {
-        e.preventDefault();
+    const responseGoogle = (response) => {
+        console.log(response);
         (async () => {
-            let body = {
-                username: username,
-                password: password,
-            }
-            try {
-                setIsLoading(true)
-                const response = await axios.post(`${process.env.REACT_APP_DASHBOARD_API}/login`, body);
-                if (response.data.error) {
-                    setIsError(true);
-                } else {
-                    localStorage.setItem('token', response.data.access_token);
-                    handleTriggerConnected(true);
-                }
-                setIsLoading(false)
-            } catch (err) {
-                if (err.response) {
-                    setIsLoading(false);
-                    setIsError(true);
-                }
-            }
+            await loginInSerer('google', response.name, response.googleId, response.email)
         })()
     }
+
+    useEffect(() => {
+        (async () => {
+            try {
+                setIsBigLoading(true);
+                const response = await axios.get(`${process.env.REACT_APP_DASHBOARD_API}/google/O-Auth`);
+                setGoogleClientId(response.data.googleClientId);
+                setIsBigLoading(false);
+            } catch (err) {
+                alert('Server not connected')
+            }
+        })()
+    }, [])
+
+    async function loginInSerer(type, name, pass, email) {
+        let body = {
+            username: name,
+            password: pass,
+            email: email,
+            auth: type,
+        }
+        try {
+            setIsLoading(true)
+            const response = await axios.post(`${process.env.REACT_APP_DASHBOARD_API}/login`, body);
+            if (response.data.error) {
+                setIsError(true);
+            } else {
+                localStorage.setItem('token', response.data.access_token);
+                handleTriggerConnected(true);
+            }
+            setIsLoading(false)
+        } catch (err) {
+            if (err.response) {
+                setIsLoading(false);
+                setIsError(true);
+            }
+        }
+    }
+
+    const onSubmit = async (e) => {
+        e.preventDefault();
+        await loginInSerer('local', username, password, 'google');
+    }
+
+    if (isBigLoading)
+        return <Grid container item xs={12} style={{height: '100vh'}} alignItems={'center'} justifyContent={'center'}>
+            <CircularProgress/>
+        </Grid>
 
     return <Grid container component="main" sx={{height: '100vh'}}>
         <AlertError setIsError={setIsError} isError={isError}/>
@@ -85,6 +117,13 @@ export default function LoginPage({handleTriggerConnected}) {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 autoComplete="current-password"
+            />
+            <GoogleLogin
+                clientId={googleClientId}
+                buttonText="Login"
+                onSuccess={responseGoogle}
+                onFailure={responseGoogle}
+                cookiePolicy={'single_host_origin'}
             />
             <LoadingButton
                 type="submit"

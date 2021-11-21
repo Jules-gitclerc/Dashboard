@@ -30,5 +30,6 @@ module.exports = async function(req, res) {
         phone: data.phone,
         email: data.email,
         isIdentified: data.is_identified,
+        avatar: data.avatar,
     }).status(200);
 }

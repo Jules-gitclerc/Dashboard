@@ -21,10 +21,29 @@ function getUser(body) {
     })
 }
 
+function getUserGoogle(body) {
+    return new Promise(async (resolve, reject) => {
+        try {
+            let sqlRequest = `SELECT * FROM User WHERE email='${body.email}' AND auth='google';`
+            let data = await database.request(sqlRequest);
+            if (data.length > 0) {
+                resolve(data[0]);
+            } else {
+                resolve({
+                    error: 'user is not here',
+                })
+            }
+        } catch (err) {
+            console.log('err', err)
+            reject(err)
+        }
+    })
+}
+
 function hashCheck(body, hash) {
     return new Promise(async (resolve, reject) => {
         try {
-            bcrypt.compare(body.password, hash, function(err, res) {
+            bcrypt.compare(body.password, hash, function (err, res) {
                 resolve(res);
             });
         } catch (err) {
@@ -35,13 +54,18 @@ function hashCheck(body, hash) {
 }
 
 module.exports = async function (req, res) {
-    let user = await getUser(req.body);
+    let user;
+
+    if (req.body.auth == 'google')
+        user = await getUserGoogle(req.body);
+    else
+        user = await getUser(req.body);
 
     if (user.error) {
         res.send({
             error: user.error
         }).status(200);
-    } else {
+    } else if (req.body.auth != 'google') {
         let checkPassword = await hashCheck(req.body, user.password);
 
         if (checkPassword) {
@@ -54,5 +78,10 @@ module.exports = async function (req, res) {
                 error: 'wrong password',
             }).status(200);
         }
+    } else {
+        res.json({
+            access_token: token.generateToken(user.username, user.user_id),
+            duration: '3 hours',
+        }).status(200)
     }
 }
