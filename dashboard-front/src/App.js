@@ -64,7 +64,8 @@ function App() {
                         <LoginPage handleTriggerConnected={handleTriggerConnected}/>}
                 </Route>
                 <Route exact path={"/createAccount"}>
-                    <CreateAccount handleTriggerConnected={handleTriggerConnected}/>
+                    {isConnected ? <Redirect to={'/App'}/> :
+                        <CreateAccount handleTriggerConnected={handleTriggerConnected}/>}
                 </Route>
                 <Route path={"/App"}>
                     {isConnected === false ? <Redirect to={'/login'}/> : <></>}

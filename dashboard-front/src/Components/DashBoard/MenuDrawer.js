@@ -23,7 +23,6 @@ import AddIcon from '@mui/icons-material/Add';
 
 const drawerWidth = 200;
 
-
 function CollapseServiceWidget({data, handleNewItem, items}) {
     const [openCollapse, setOpenCollapse] = useState(false);
 
@@ -38,22 +37,23 @@ function CollapseServiceWidget({data, handleNewItem, items}) {
         <ListItemText primary={data.label}/>
         {openCollapse ? <ExpandLess/> : <ExpandMore/>}
     </ListItem>
-    <Collapse in={openCollapse} timeout="auto" unmountOnExit>
-        <List component="div" disablePadding dense style={{marginLeft: 20}}>
-            {data.widget.map(item => <ListItemButton disabled={!!items.find(elem => elem.id === item.id)} key={`Widget ${item.id}`} onClick={() => {
-                handleNewItem(item)
-            }}>
-                <ListItemIcon>
-                    {item.icon}
-                </ListItemIcon>
-                <ListItemText primary={item.label}/>
-            </ListItemButton>)}
-        </List>
-    </Collapse></>
+        <Collapse in={openCollapse} timeout="auto" unmountOnExit>
+            <List component="div" disablePadding dense style={{marginLeft: 20}}>
+                {data.widget.map(item => <ListItemButton disabled={!!items.find(elem => elem.id === item.id)}
+                                                         key={`Widget ${item.id}`} onClick={() => {
+                    handleNewItem(item)
+                }}>
+                    <ListItemIcon>
+                        {item.icon}
+                    </ListItemIcon>
+                    <ListItemText primary={item.label}/>
+                </ListItemButton>)}
+            </List>
+        </Collapse></>
 }
 
 
-export default function MenuDrawer({items, handleNewItem}) {
+export default function MenuDrawer({items, handleNewItem, userData}) {
     const history = useHistory();
     const {url} = useRouteMatch();
     const [isLogout, setIsLogout] = useState(false);
@@ -91,7 +91,7 @@ export default function MenuDrawer({items, handleNewItem}) {
         <Box sx={{overflow: 'auto'}}>
             <List dense>
                 {pagesConfig.map(item => <ListItem key={`Dash = ${item.id} ${item.name}`} button
-                                                   onClick={() => history.push(`${url}${item.redirect}`)}>
+                                                   onClick={() => history.push(`${url}/${item.redirect}`)}>
                     <ListItemIcon>
                         {item.icon}
                     </ListItemIcon>
@@ -108,10 +108,15 @@ export default function MenuDrawer({items, handleNewItem}) {
                     </ListSubheader>
                 }
             >
-                {serviceConfig.map(item => <CollapseServiceWidget key={`Service = ${item.id}`} data={item}
-                                                                  handleNewItem={handleNewItem} items={items}/>)}
+                {serviceConfig.map(item => {
+                    if (userData.services.find(elem => elem.id_service === item.id))
+                        return <CollapseServiceWidget key={`Service = ${item.id}`} data={item}
+                                           handleNewItem={handleNewItem} items={items}/>
+                    return null;
+                })}
                 <ListItem>
-                    <Button startIcon={<AddIcon />} fullWidth variant={'contained'} style={{padding: 0, borderRadius: 10}}>
+                    <Button startIcon={<AddIcon/>} fullWidth variant={'contained'}
+                            style={{padding: 0, borderRadius: 10}}>
                         More Service
                     </Button>
                 </ListItem>
@@ -120,9 +125,9 @@ export default function MenuDrawer({items, handleNewItem}) {
             <List component="nav" dense>
                 <ListItemButton onClick={() => clientDisconnect()}>
                     <ListItemIcon>
-                        <LogoutIcon />
+                        <LogoutIcon/>
                     </ListItemIcon>
-                    <ListItemText primary="Logout" />
+                    <ListItemText primary="Logout"/>
                 </ListItemButton>
             </List>
         </Box>

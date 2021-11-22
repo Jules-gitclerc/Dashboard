@@ -37,6 +37,7 @@ export default function DashBoard({handleTriggerConnected}) {
                 setIsLoading(true)
                 const response = await axios.get(`${process.env.REACT_APP_DASHBOARD_API}/userData`,
                     {'headers': {'Authorization': `Bearer  ${localStorage.getItem('token')}`}})
+                console.log(response.data)
                 setUserData(response.data);
                 setTheme(createTheme({
                     palette: {
@@ -72,7 +73,7 @@ export default function DashBoard({handleTriggerConnected}) {
     return <ThemeProvider theme={theme}>
         <div className={classes.root}>
             <MenuAppBar userData={userData}/>
-            <MenuDrawer items={items} handleNewItem={handleNewItem}/>
+            <MenuDrawer items={items} handleNewItem={handleNewItem} userData={userData}/>
             <div className={classes.content}>
                 <Routes items={items} setItems={setItems}/>
             </div>

@@ -51,7 +51,7 @@ export default function Reddit({widget}) {
             }}>
                 <img alt={'Background reddit'} src={'/Images/WallPaper/reddit.jpeg'} style={{width: '100%', height: '100%'}}/>
             </Grid>
-            <Grid container item xs={7} lg={5} style={{zIndex: 5}}>
+            <Grid container item xs={7} lg={7} xl={10} style={{zIndex: 5}}>
                 <Paper style={{width: '100%', padding: 30}} elevation={6}>
                     <Grid container item xs={12} spacing={3}>
                         <Grid container item xs={12} justifyContent={'center'} alignItems={'center'} direction={'column'}>

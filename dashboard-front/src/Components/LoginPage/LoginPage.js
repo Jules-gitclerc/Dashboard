@@ -17,7 +17,6 @@ export default function LoginPage({handleTriggerConnected}) {
     const [password, setPassword] = useState("");
     const [isLoading, setIsLoading] = useState(false);
     const [isBigLoading, setIsBigLoading] = useState(false);
-    const [googleClientId, setGoogleClientId] = useState('');
     const [isError, setIsError] = useState(false);
 
     const responseGoogle = (response) => {
@@ -31,8 +30,7 @@ export default function LoginPage({handleTriggerConnected}) {
         (async () => {
             try {
                 setIsBigLoading(true);
-                const response = await axios.get(`${process.env.REACT_APP_DASHBOARD_API}/google/O-Auth`);
-                setGoogleClientId(response.data.googleClientId);
+                await axios.get(`${process.env.REACT_APP_DASHBOARD_API}/google/O-Auth`);
                 setIsBigLoading(false);
             } catch (err) {
                 alert('Server not connected')
@@ -119,7 +117,7 @@ export default function LoginPage({handleTriggerConnected}) {
                 autoComplete="current-password"
             />
             <GoogleLogin
-                clientId={googleClientId}
+                clientId={"329571686461-943drjr484p364gtu6q1u5k5l9jof4br.apps.googleusercontent.com"}
                 buttonText="Sign in"
                 onSuccess={responseGoogle}
                 onFailure={responseGoogle}
