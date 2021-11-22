@@ -1,11 +1,12 @@
 import React, {useEffect, useState} from "react";
-import MenuDrawer from "./MenuDrawer";
+import MenuDrawer, {drawerWidth} from "./MenuDrawer";
 import makeStyles from '@mui/styles/makeStyles';
 import MenuAppBar from "./MenuAppBar";
 import Routes from "./Routes";
-import {CircularProgress, createTheme} from "@mui/material"; /*adaptV4Theme*/
+import {CircularProgress, createTheme} from "@mui/material";
 import axios from "axios";
 import {ThemeProvider} from "@emotion/react";
+import clsx from 'clsx';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -16,6 +17,11 @@ const useStyles = makeStyles((theme) => ({
         marginTop: 64,
         height: "calc(100vh - 64px)",
         overflow: 'hidden',
+        marginLeft: -drawerWidth,
+    },
+    contentShift: {
+        height: "calc(100vh - 64px)",
+        marginLeft: 0,
     },
 
 }))
@@ -27,6 +33,7 @@ export default function DashBoard({handleTriggerConnected}) {
         }
     }))
     const [userData, setUserData] = useState(null);
+    const [drawerOpen, setDrawerOpen] = useState(true);
     const [items, setItems] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
     const classes = useStyles();
@@ -70,11 +77,17 @@ export default function DashBoard({handleTriggerConnected}) {
         setItems([...items, model]);
     }
 
+    const handleDrawer = (open) => {
+        setDrawerOpen(open)
+    }
+
     return <ThemeProvider theme={theme}>
         <div className={classes.root}>
-            <MenuAppBar userData={userData}/>
-            <MenuDrawer items={items} handleNewItem={handleNewItem} userData={userData}/>
-            <div className={classes.content}>
+            <MenuAppBar userData={userData} drawerOpen={drawerOpen} handleDrawer={handleDrawer}/>
+            <MenuDrawer items={items} handleNewItem={handleNewItem} userData={userData} drawerOpen={drawerOpen} handleDrawer={handleDrawer}/>
+            <div className={clsx(classes.content, {
+                [classes.contentShift]: drawerOpen,
+            })}>
                 <Routes items={items} setItems={setItems}/>
             </div>
         </div>

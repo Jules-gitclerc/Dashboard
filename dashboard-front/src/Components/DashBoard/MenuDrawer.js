@@ -2,7 +2,7 @@ import {
     Avatar,
     Box, Button, Collapse,
     Divider,
-    Drawer,
+    Drawer, IconButton,
     List,
     ListItem, ListItemButton,
     ListItemIcon,
@@ -20,8 +20,9 @@ import LogoutIcon from "@mui/icons-material/Logout";
 import axios from "axios";
 import AlertError from "../Tools/AlertError";
 import AddIcon from '@mui/icons-material/Add';
+import MenuIcon from "@mui/icons-material/Menu";
 
-const drawerWidth = 200;
+export const drawerWidth = 200;
 
 function CollapseServiceWidget({data, handleNewItem, items}) {
     const [openCollapse, setOpenCollapse] = useState(false);
@@ -53,7 +54,7 @@ function CollapseServiceWidget({data, handleNewItem, items}) {
 }
 
 
-export default function MenuDrawer({items, handleNewItem, userData}) {
+export default function MenuDrawer({items, handleNewItem, userData, drawerOpen, handleDrawer}) {
     const history = useHistory();
     const {url} = useRouteMatch();
     const [isLogout, setIsLogout] = useState(false);
@@ -79,14 +80,20 @@ export default function MenuDrawer({items, handleNewItem, userData}) {
     }
 
     return <Drawer
-        variant="permanent"
+        variant="persistent"
+        anchor="left"
+        open={drawerOpen}
         sx={{
             width: drawerWidth,
             flexShrink: 0,
             [`& .MuiDrawer-paper`]: {width: drawerWidth, boxSizing: 'border-box'},
         }}
     >
-        <Toolbar/>
+        <Toolbar>
+            <IconButton onClick={() => handleDrawer(!drawerOpen)}>
+                <MenuIcon/>
+            </IconButton>
+        </Toolbar>
         <AlertError isError={isError} setIsError={setIsError}/>
         <Box sx={{overflow: 'auto'}}>
             <List dense>
