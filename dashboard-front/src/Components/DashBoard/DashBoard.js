@@ -20,6 +20,7 @@ const useStyles = makeStyles((theme) => ({
         marginLeft: -drawerWidth,
     },
     contentShift: {
+        width: "100%",
         height: "calc(100vh - 64px)",
         marginLeft: 0,
     },
@@ -44,7 +45,6 @@ export default function DashBoard({handleTriggerConnected}) {
                 setIsLoading(true)
                 const response = await axios.get(`${process.env.REACT_APP_DASHBOARD_API}/userData`,
                     {'headers': {'Authorization': `Bearer  ${localStorage.getItem('token')}`}})
-                console.log(response.data)
                 setUserData(response.data);
                 setTheme(createTheme({
                     palette: {

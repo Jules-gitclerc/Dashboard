@@ -6,13 +6,13 @@ let pagesConfig = [
         id: 1,
         name: 'Dashboard',
         icon: <DashboardIcon/>,
-        redirect: '/',
+        redirect: '',
     },
     {
         id: 2,
         name: 'Profile',
         icon: <PersonIcon/>,
-        redirect: 'Profile',
+        redirect: '/Profile',
     },
 ]
 

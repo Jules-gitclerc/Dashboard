@@ -98,7 +98,7 @@ export default function MenuDrawer({items, handleNewItem, userData, drawerOpen, 
         <Box sx={{overflow: 'auto'}}>
             <List dense>
                 {pagesConfig.map(item => <ListItem key={`Dash = ${item.id} ${item.name}`} button
-                                                   onClick={() => history.push(`${url}/${item.redirect}`)}>
+                                                   onClick={() => history.push(`${url}${item.redirect}`)}>
                     <ListItemIcon>
                         {item.icon}
                     </ListItemIcon>

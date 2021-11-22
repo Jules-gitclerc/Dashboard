@@ -23,7 +23,7 @@ export default function MenuAppBar({userData, drawerOpen, handleDrawer}) {
     const handleCloseMenuPopover = () => {
         setAnchorEl(null);
     };
-    
+
     return <AppBar position="fixed" sx={{ zIndex: (theme) => theme.zIndex.drawer + 1 }}>
         <Toolbar>
             <Grid container item xs={12} justifyContent={'space-between'} alignItems={'center'} style={{height: '100%'}}>
