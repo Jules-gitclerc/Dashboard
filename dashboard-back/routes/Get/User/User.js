@@ -52,5 +52,7 @@ module.exports = async function(req, res) {
         isIdentified: data.is_identified,
         avatar: data.avatar,
         services: service,
+        firstName: data.first_name,
+        lastName: data.last_name,
     }).status(200);
 }

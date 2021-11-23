@@ -1,20 +1,18 @@
 import React, {useState} from 'react'
 import {
     Avatar,
-    Button,
-    Grid, IconButton,
+    Grid,
     List,
     ListItem,
     ListItemIcon,
     ListItemText,
     ListSubheader,
-    TextField
+    TextField,
+    Checkbox,
 } from "@mui/material";
 import serviceConfig from "../Widget/config";
-import SaveIcon from '@mui/icons-material/Save';
-import DeleteIcon from '@mui/icons-material/Delete';
 
-export default function ServicesManager({data}) {
+export default function ServicesManager({data, isEdit}) {
     const [search, setSearch] = useState('');
 
     return <Grid container item xs={3} style={{padding: 10}}>
@@ -30,21 +28,20 @@ export default function ServicesManager({data}) {
                 </ListSubheader>
             }
         >
-            {serviceConfig.map(item => <ListItem key={`Services manager = ${item.id} ${item.name}`}
-                                                 secondaryAction={
-                                                     <IconButton edge="end" aria-label="delete">
-                                                         <DeleteIcon />
-                                                     </IconButton>
-                                                 }>
-                <ListItemIcon>
-                    <Avatar src={item.logo} alt={`${item.label} ${item.id}`} style={{height: 30, width: 30}}/>
-                </ListItemIcon>
-                <ListItemText primary={item.label}/>
-
-            </ListItem>)}
+            {serviceConfig.map(item => {
+                if (item.label.includes(search.toLocaleLowerCase()))
+                    return <ListItem key={`Services manager = ${item.id} ${item.label}`}
+                                     secondaryAction={
+                                         <Checkbox disabled={!isEdit} color={'primary'} edge="end"
+                                                   checked={!!data.services.find(elem => elem.id_service === item.id)}/>
+                                     }>
+                        <ListItemIcon>
+                            <Avatar src={item.logo} alt={`${item.label} ${item.id}`} style={{height: 30, width: 30}}/>
+                        </ListItemIcon>
+                        <ListItemText primary={item.label}/>
+                    </ListItem>
+                return null;
+            })}
         </List>
-        <Button startIcon={<SaveIcon/>} fullWidth variant={'contained'}>
-            Save
-        </Button>
     </Grid>
 }
