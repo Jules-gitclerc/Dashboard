@@ -3,6 +3,7 @@ import PersonIcon from '@mui/icons-material/Person';
 import ImageIcon from '@mui/icons-material/Image';
 
 import Reddit from "./Reddit/Reddit";
+import SearchChampion from "./LeagueOfLegend/SearchChampion/SearchChampion";
 
 export const REDDIT = 10
 export const REDDIT_POSTS = 11
@@ -10,7 +11,7 @@ export const REDDIT_SEARCH = 12
 export const REDDIT_PROFILE = 13
 
 export const LEAGUE_OF_LEGEND = 20
-export const LEAGUE_OF_LEGEND_SEARCH = 21
+export const LEAGUE_OF_LEGEND_SEARCH_CHAMPION = 21
 
 let widgetConfig = [
     {
@@ -38,12 +39,12 @@ let widgetConfig = [
         component: <Reddit widget={REDDIT_PROFILE}/>,
     },
     {
-        id: LEAGUE_OF_LEGEND_SEARCH,
-        label: 'LOL Search',
+        id: LEAGUE_OF_LEGEND_SEARCH_CHAMPION,
+        label: 'Search champion',
         logoService: 'Images/LogoApi/league_of_legends.png',
         icon: <SearchIcon/>,
-        size: {w: 3, h: 3, x: 0, y: Infinity},
-        component: <div>lol_search</div>,
+        size: {w: 6, h: 5, x: 0, y: Infinity},
+        component: <SearchChampion/>,
     }
 ]
 
@@ -64,7 +65,7 @@ let serviceConfig = [
         label: 'League of legend',
         logoService: 'Images/LogoApi/league_of_legends.png',
         widget: [
-            widgetConfig.find(elem => elem.id === LEAGUE_OF_LEGEND_SEARCH),
+            widgetConfig.find(elem => elem.id === LEAGUE_OF_LEGEND_SEARCH_CHAMPION),
         ]
     }
 ]

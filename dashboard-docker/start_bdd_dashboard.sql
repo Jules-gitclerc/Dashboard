@@ -12,6 +12,8 @@ CREATE TABLE User(
     email varchar(255) not null,
     password varchar(255) not null,
     phone varchar(255) not null,
+    avatar varchar(255),
+    auth varchar(255),
     is_identified bool,
     primary key(user_id)
 );
@@ -23,5 +25,5 @@ CREATE TABLE Services(
     name varchar(255) not null
 );
 
-INSERT INTO Services(id_service, name) VALUES (1, 'Reddit');
-INSERT INTO Services(id_service, name) VALUES (2, 'League of legends');
+INSERT INTO Services(id_service, name) VALUES (10, 'Reddit');
+INSERT INTO Services(id_service, name) VALUES (20, 'League of legends');
