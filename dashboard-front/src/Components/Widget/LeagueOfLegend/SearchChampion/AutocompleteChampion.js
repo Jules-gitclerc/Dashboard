@@ -2,7 +2,7 @@ import React, {useEffect, useState} from 'react'
 import AlertError from "../../../Tools/AlertError";
 import axios from "axios";
 import {Autocomplete} from "@mui/lab";
-import {Box, TextField} from "@mui/material";
+import {Box, Grid, TextField} from "@mui/material";
 
 export default function AutocompleteChampion({value, handleChange}) {
     const [data, setData] = useState([]);
@@ -28,19 +28,19 @@ export default function AutocompleteChampion({value, handleChange}) {
         })()
     }, [])
 
-    return <>
-        <AlertError isError={isError} setIsError={setIsError} />
+    return <Grid container item xs={12} style={{padding: 10, height: 75}}>
+        <AlertError isError={isError} setIsError={setIsError}/>
         <Autocomplete
             disabled={isLoading}
             disablePortal
             options={data}
             getOptionLabel={(option) => option.name}
             autoHighlight
-            sx={{ width: 300 }}
+            sx={{width: 300}}
             onChange={(event, option) => handleChange(option)}
             value={value}
             renderOption={(props, option) => (
-                <Box component="li" sx={{ '& > img': { mr: 2, flexShrink: 0 } }} {...props}>
+                <Box component="li" sx={{'& > img': {mr: 2, flexShrink: 0}}} {...props}>
                     <img
                         loading="lazy"
                         width="40"
@@ -59,5 +59,5 @@ export default function AutocompleteChampion({value, handleChange}) {
                     autoComplete: 'new-password', // disable autocomplete and autofill
                 }}
             />}
-        /></>
+        /></Grid>
 }

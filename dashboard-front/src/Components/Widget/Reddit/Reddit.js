@@ -2,11 +2,10 @@ import React, {useEffect, useState} from "react";
 import {Avatar, Button, Grid, Paper, Typography} from "@mui/material";
 import AlertError from "../../Tools/AlertError";
 import LockIcon from "@mui/icons-material/Lock";
-import {REDDIT_POSTS, REDDIT_PROFILE, REDDIT_SEARCH} from "../config";
+import {REDDIT_POSTS, REDDIT_SEARCH} from "../config";
 import Posts from "./Posts/Posts";
 import axios from "axios";
 import Search from "./Search/Search";
-import Profile from "./Profile/Profile";
 
 export default function Reddit({widget}) {
     const [isConnected, setIsConnected] = useState(false);
@@ -18,7 +17,6 @@ export default function Reddit({widget}) {
 
     let redditComponents = [
         {id: REDDIT_POSTS, component: <Posts handleConnected={handleConnected}/>},
-        {id: REDDIT_PROFILE, component: <Profile handleConnected={handleConnected}/>},
         {id: REDDIT_SEARCH, component: <Search handleConnected={handleConnected}/>},
     ]
 
