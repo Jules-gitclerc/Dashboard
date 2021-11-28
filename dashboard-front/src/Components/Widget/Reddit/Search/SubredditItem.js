@@ -15,7 +15,7 @@ function SubscribeToReddit({data}) {
             try {
                 setIsLoadingData(true)
                 const response = await axios.get(`https://oauth.reddit.com/r/${data.name}/about`, {'headers': {'Authorization': `Bearer  ${localStorage.getItem('JWTReddit')}`}});
-                setIsSubscriber(response.data.data.subscribers)
+                setIsSubscriber(response.data.data.user_is_subscriber)
                 setIsLoadingData(false)
             } catch (err) {
                 if (err.response) {

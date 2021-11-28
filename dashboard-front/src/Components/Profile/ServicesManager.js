@@ -29,7 +29,7 @@ export default function ServicesManager({data, isEdit}) {
             }
         >
             {serviceConfig.map(item => {
-                if (item.label.includes(search.toLocaleLowerCase()))
+                if (item.label.toLocaleLowerCase().includes(search.toLocaleLowerCase()))
                     return <ListItem key={`Services manager = ${item.id} ${item.label}`}
                                      secondaryAction={
                                          <Checkbox disabled={!isEdit} color={'primary'} edge="end"
