@@ -8,7 +8,7 @@ export default function WeatherSearchDisplay({data, isLoading}) {
         </Grid>
 
     if (!data)
-        return <Grid container item xs={12} justifyContent={'center'}>
+        return <Grid container item xs={12} justifyContent={'center'} alignItems={'center'}>
             Select your country and city for display weather
         </Grid>
 

@@ -17,7 +17,7 @@ export default function CountryFilter({handleFilter}) {
         handleFilter(country.code, city)
     }
 
-    return <Grid container item xs={12} component={'form'} onSubmit={onSubmit} justifyContent={'space-around'} style={{padding: 10}} alignItems={'center'}>
+    return <Grid container item xs={12} component={'form'} onSubmit={onSubmit} justifyContent={'space-around'} style={{padding: 10, height: 75}} alignItems={'center'}>
         <Grid item xs={5}>
             <AutocompleteCountry disabled={false} isRequired={true} selected={country} handleSelect={handleSelect}/>
         </Grid>
