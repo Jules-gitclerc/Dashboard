@@ -90,9 +90,23 @@ export default function DashBoard({handleTriggerConnected}) {
         setIsReload(isToReload)
     }
 
+    const handleThemeChange = (primary, secondary) => {
+        console.log("je suis la");
+        setTheme(createTheme({
+            palette: {
+                primary: {
+                    main: primary,
+                },
+                secondary: {
+                    main: secondary,
+                },
+            },
+        }))
+    }
+
     return <ThemeProvider theme={theme}>
         <div className={classes.root}>
-            <MenuAppBar userData={userData} drawerOpen={drawerOpen} handleDrawer={handleDrawer}/>
+            <MenuAppBar userData={userData} drawerOpen={drawerOpen} handleDrawer={handleDrawer} handleThemeChange={handleThemeChange}/>
             <MenuDrawer items={items} handleNewItem={handleNewItem} userData={userData} drawerOpen={drawerOpen} handleDrawer={handleDrawer} hotReload={hotReload}/>
             <div className={clsx(classes.content, {
                 [classes.contentShift]: drawerOpen,

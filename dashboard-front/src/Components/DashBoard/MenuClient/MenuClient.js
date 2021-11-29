@@ -18,7 +18,7 @@ import PersonIcon from '@mui/icons-material/Person';
 import PaletteIcon from '@mui/icons-material/Palette';
 import LogoutIcon from '@mui/icons-material/Logout';
 
-export default function MenuClient({anchorEl, handleCloseMenuPopover}) {
+export default function MenuClient({anchorEl, handleCloseMenuPopover, handleThemeChange}) {
     const [isLogout, setIsLogout] = useState(false);
     const [isError, setIsError] = useState(false);
     const [openDialogTheme, setOpenDialogTheme] = useState(false);
@@ -63,7 +63,7 @@ export default function MenuClient({anchorEl, handleCloseMenuPopover}) {
         }}
     >
         <AlertError isError={isError} setIsError={setIsError}/>
-        <DialogTheme handleClose={handleCloseDialogTheme} open={openDialogTheme}/>
+        <DialogTheme handleClose={handleCloseDialogTheme} open={openDialogTheme} handleChangeTheme={handleThemeChange}/>
         <List sx={{ width: 230, bgcolor: 'background.paper' }}
               component="nav"
               subheader={
