@@ -10,7 +10,6 @@ import {
     TextField,
     Checkbox,
 } from "@mui/material";
-import serviceConfig from "../Widget/config";
 
 export default function ServicesManager({data, isEdit}) {
     const [search, setSearch] = useState('');
@@ -28,12 +27,12 @@ export default function ServicesManager({data, isEdit}) {
                 </ListSubheader>
             }
         >
-            {serviceConfig.map(item => {
+            {data.services.map(item => {
                 if (item.label.toLocaleLowerCase().includes(search.toLocaleLowerCase()))
                     return <ListItem key={`Services manager = ${item.id} ${item.label}`}
                                      secondaryAction={
                                          <Checkbox disabled={!isEdit} color={'primary'} edge="end"
-                                                   checked={!!data.services.find(elem => elem.id_service === item.id)}/>
+                                                   checked={item.checked}/>
                                      }>
                         <ListItemIcon>
                             <Avatar src={item.logo} alt={`${item.label} ${item.id}`} style={{height: 30, width: 30}}/>

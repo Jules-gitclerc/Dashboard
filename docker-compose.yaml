@@ -6,7 +6,7 @@ services:
       image: "mariadb:latest"
       restart: 'always'
       ports:
-        - '3306:3306'
+        - '3307:3307'
       volumes:
         - "db-data:/var/lib/mysql/data"
         - "./db-dump:/docker-entrypoint-initdb.d"

@@ -59,6 +59,7 @@ export default function MenuDrawer({items, handleNewItem, userData, drawerOpen, 
     const {url} = useRouteMatch();
     const [isLogout, setIsLogout] = useState(false);
     const [isError, setIsError] = useState(false);
+    const [openMoreService, setOpenMoreService] = useState(false);
 
     function clientDisconnect() {
         (async () => {
@@ -123,7 +124,7 @@ export default function MenuDrawer({items, handleNewItem, userData, drawerOpen, 
                 })}
                 <ListItem>
                     <Button startIcon={<AddIcon/>} fullWidth variant={'contained'}
-                            style={{padding: 0, borderRadius: 10}}>
+                            style={{padding: 0, borderRadius: 10}} onClick={() => setOpenMoreService(true)}>
                         More Service
                     </Button>
                 </ListItem>
