@@ -37,9 +37,12 @@ export default function DashBoard({handleTriggerConnected}) {
     const [drawerOpen, setDrawerOpen] = useState(true);
     const [items, setItems] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
+    const [isReload, setIsReload] = useState(true);
     const classes = useStyles();
 
     useEffect(() => {
+        if (!isReload)
+            return;
         (async () => {
             try {
                 setIsLoading(true)
@@ -52,14 +55,16 @@ export default function DashBoard({handleTriggerConnected}) {
                     }
                 }))
                 setIsLoading(false)
+                setIsReload(false)
             } catch (err) {
                 handleTriggerConnected(false);
                 if (err.response) {
                     setIsLoading(false);
+                    setIsReload(false)
                 }
             }
         })()
-    }, [handleTriggerConnected])
+    }, [handleTriggerConnected, isReload])
 
     if (isLoading || userData === null)
         return <div
@@ -81,10 +86,14 @@ export default function DashBoard({handleTriggerConnected}) {
         setDrawerOpen(open)
     }
 
+    const hotReload = (isToReload) => {
+        setIsReload(isToReload)
+    }
+
     return <ThemeProvider theme={theme}>
         <div className={classes.root}>
             <MenuAppBar userData={userData} drawerOpen={drawerOpen} handleDrawer={handleDrawer}/>
-            <MenuDrawer items={items} handleNewItem={handleNewItem} userData={userData} drawerOpen={drawerOpen} handleDrawer={handleDrawer}/>
+            <MenuDrawer items={items} handleNewItem={handleNewItem} userData={userData} drawerOpen={drawerOpen} handleDrawer={handleDrawer} hotReload={hotReload}/>
             <div className={clsx(classes.content, {
                 [classes.contentShift]: drawerOpen,
             })}>

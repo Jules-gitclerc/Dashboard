@@ -21,6 +21,7 @@ import axios from "axios";
 import AlertError from "../Tools/AlertError";
 import AddIcon from '@mui/icons-material/Add';
 import MenuIcon from "@mui/icons-material/Menu";
+import DialogServices from "./DialogServices/DialogServices";
 
 export const drawerWidth = 200;
 
@@ -54,7 +55,7 @@ function CollapseServiceWidget({data, handleNewItem, items}) {
 }
 
 
-export default function MenuDrawer({items, handleNewItem, userData, drawerOpen, handleDrawer}) {
+export default function MenuDrawer({items, handleNewItem, userData, drawerOpen, handleDrawer, hotReload}) {
     const history = useHistory();
     const {url} = useRouteMatch();
     const [isLogout, setIsLogout] = useState(false);
@@ -78,6 +79,11 @@ export default function MenuDrawer({items, handleNewItem, userData, drawerOpen, 
     if (isLogout) {
         localStorage.clear();
         return <Redirect to={'/'}/>
+    }
+
+    const handleCloseDialogServices = (isToReload) => {
+        hotReload(isToReload)
+        setOpenMoreService(false);
     }
 
     return <Drawer
@@ -139,5 +145,6 @@ export default function MenuDrawer({items, handleNewItem, userData, drawerOpen, 
                 </ListItemButton>
             </List>
         </Box>
+        <DialogServices open={openMoreService} handleClose={handleCloseDialogServices} userData={userData}/>
     </Drawer>
 }

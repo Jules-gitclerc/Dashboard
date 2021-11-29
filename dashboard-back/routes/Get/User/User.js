@@ -51,7 +51,7 @@ module.exports = async function(req, res) {
         email: data.email,
         isIdentified: data.is_identified,
         avatar: data.avatar,
-        services: service,
+        services: (!service.error ? service : []),
         firstName: data.first_name,
         lastName: data.last_name,
     }).status(200);

@@ -17,6 +17,7 @@ function updateUser(body, idUser) {
 module.exports = async function (req, res) {
     let dataToken = token.getTokenData(req);
     await updateUser(req.body, dataToken.id_user);
+
     res.status(200).send({
         error: 'Le voix de dieu a parler'
     });
