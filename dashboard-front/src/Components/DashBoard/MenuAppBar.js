@@ -1,6 +1,5 @@
 import React, {useState} from "react";
 import {
-    AppBar,
     Avatar,
     Grid, IconButton,
     List,
@@ -8,12 +7,13 @@ import {
     ListItemAvatar,
     ListItemText,
     Toolbar,
-    Typography
+    Typography,
+    AppBar
 } from "@mui/material";
 import MenuClient from "./MenuClient/MenuClient";
 import MenuIcon from '@mui/icons-material/Menu';
 
-export default function MenuAppBar({userData}) {
+export default function MenuAppBar({userData, drawerOpen, handleDrawer}) {
     const [anchorEl, setAnchorEl] = useState(null);
 
     const handleOpenMenuPopover = (event) => {
@@ -23,13 +23,13 @@ export default function MenuAppBar({userData}) {
     const handleCloseMenuPopover = () => {
         setAnchorEl(null);
     };
-    
+
     return <AppBar position="fixed" sx={{ zIndex: (theme) => theme.zIndex.drawer + 1 }}>
         <Toolbar>
             <Grid container item xs={12} justifyContent={'space-between'} alignItems={'center'} style={{height: '100%'}}>
                 <Grid container item xs={2} alignItems={'center'} justifyContent={"space-between"}>
                     <Grid container item xs={1} style={{height: '100%'}} alignItems={'center'} justifyContent={'center'} direction={'column'}>
-                        <IconButton>
+                        <IconButton onClick={() => handleDrawer(!drawerOpen)}>
                             <MenuIcon/>
                         </IconButton>
                     </Grid>

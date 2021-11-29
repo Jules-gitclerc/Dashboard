@@ -19,6 +19,40 @@ function createNewAccount(body) {
     })
 }
 
+function servicesInsert(body, id_user) {
+    if (!body.services.find(elem => elem.checked == true))
+        return;
+
+    return new Promise(async (resolve, reject) => {
+        try {
+            let insertTab = []
+
+            body.services.forEach((elem) => {
+                if (elem.checked)
+                    insertTab.push(`(${elem.id}, ${id_user})`)
+            })
+            if (insertTab.length == 0) {
+                resolve();
+            } else {
+                let sqlRequest = `INSERT INTO LinkUserServices (id_service, id_user) VALUES `//('${body.username}', '${body.firstName}', '${body.lastName}', '${body.mail}', '${hash}', '${body.phone}', false, '${body.avatar}', '${body.auth}');
+
+                insertTab.forEach((elem, index) => {
+                    sqlRequest += elem
+                    if (index + 1 != insertTab.length)
+                        sqlRequest += ", "
+                    else
+                        sqlRequest += ";"
+                })
+                await database.request(sqlRequest);
+                resolve();
+            }
+        } catch (err) {
+            console.log('err', err)
+            reject(err)
+        }
+    })
+}
+
 function getUserId(body) {
     return new Promise(async (resolve, reject) => {
         try {
@@ -107,7 +141,7 @@ function identificationMail(mail, userId, username) {
         text: `http://${results["en0"][0]}:3000/identification/${userId}/${username}`
     };
 
-    transporter.sendMail(mailOptions, function(error, info){
+    transporter.sendMail(mailOptions, function (error, info) {
         if (error) {
             console.log(error);
         } else {
@@ -136,6 +170,8 @@ module.exports = async function (req, res) {
             id = await getUserGoogle(req.body);
         else
             id = await getUserId(req.body);
+
+        await servicesInsert(req.body, id);
 
         identificationMail(req.body.mail, id, req.body.username);
         res.json({

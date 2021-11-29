@@ -2,7 +2,7 @@ import {
     Avatar,
     Box, Button, Collapse,
     Divider,
-    Drawer,
+    Drawer, IconButton,
     List,
     ListItem, ListItemButton,
     ListItemIcon,
@@ -20,9 +20,9 @@ import LogoutIcon from "@mui/icons-material/Logout";
 import axios from "axios";
 import AlertError from "../Tools/AlertError";
 import AddIcon from '@mui/icons-material/Add';
+import MenuIcon from "@mui/icons-material/Menu";
 
-const drawerWidth = 200;
-
+export const drawerWidth = 200;
 
 function CollapseServiceWidget({data, handleNewItem, items}) {
     const [openCollapse, setOpenCollapse] = useState(false);
@@ -38,26 +38,28 @@ function CollapseServiceWidget({data, handleNewItem, items}) {
         <ListItemText primary={data.label}/>
         {openCollapse ? <ExpandLess/> : <ExpandMore/>}
     </ListItem>
-    <Collapse in={openCollapse} timeout="auto" unmountOnExit>
-        <List component="div" disablePadding dense style={{marginLeft: 20}}>
-            {data.widget.map(item => <ListItemButton disabled={!!items.find(elem => elem.id === item.id)} key={`Widget ${item.id}`} onClick={() => {
-                handleNewItem(item)
-            }}>
-                <ListItemIcon>
-                    {item.icon}
-                </ListItemIcon>
-                <ListItemText primary={item.label}/>
-            </ListItemButton>)}
-        </List>
-    </Collapse></>
+        <Collapse in={openCollapse} timeout="auto" unmountOnExit>
+            <List component="div" disablePadding dense style={{marginLeft: 20}}>
+                {data.widget.map(item => <ListItemButton disabled={!!items.find(elem => elem.id === item.id)}
+                                                         key={`Widget ${item.id}`} onClick={() => {
+                    handleNewItem(item)
+                }}>
+                    <ListItemIcon>
+                        {item.icon}
+                    </ListItemIcon>
+                    <ListItemText primary={item.label}/>
+                </ListItemButton>)}
+            </List>
+        </Collapse></>
 }
 
 
-export default function MenuDrawer({items, handleNewItem}) {
+export default function MenuDrawer({items, handleNewItem, userData, drawerOpen, handleDrawer}) {
     const history = useHistory();
     const {url} = useRouteMatch();
     const [isLogout, setIsLogout] = useState(false);
     const [isError, setIsError] = useState(false);
+    const [openMoreService, setOpenMoreService] = useState(false);
 
     function clientDisconnect() {
         (async () => {
@@ -79,14 +81,20 @@ export default function MenuDrawer({items, handleNewItem}) {
     }
 
     return <Drawer
-        variant="permanent"
+        variant="persistent"
+        anchor="left"
+        open={drawerOpen}
         sx={{
             width: drawerWidth,
             flexShrink: 0,
             [`& .MuiDrawer-paper`]: {width: drawerWidth, boxSizing: 'border-box'},
         }}
     >
-        <Toolbar/>
+        <Toolbar>
+            <IconButton onClick={() => handleDrawer(!drawerOpen)}>
+                <MenuIcon/>
+            </IconButton>
+        </Toolbar>
         <AlertError isError={isError} setIsError={setIsError}/>
         <Box sx={{overflow: 'auto'}}>
             <List dense>
@@ -108,10 +116,15 @@ export default function MenuDrawer({items, handleNewItem}) {
                     </ListSubheader>
                 }
             >
-                {serviceConfig.map(item => <CollapseServiceWidget key={`Service = ${item.id}`} data={item}
-                                                                  handleNewItem={handleNewItem} items={items}/>)}
+                {serviceConfig.map(item => {
+                    if (userData.services.find(elem => elem.id_service === item.id))
+                        return <CollapseServiceWidget key={`Service = ${item.id}`} data={item}
+                                           handleNewItem={handleNewItem} items={items}/>
+                    return null;
+                })}
                 <ListItem>
-                    <Button startIcon={<AddIcon />} fullWidth variant={'contained'} style={{padding: 0, borderRadius: 10}}>
+                    <Button startIcon={<AddIcon/>} fullWidth variant={'contained'}
+                            style={{padding: 0, borderRadius: 10}} onClick={() => setOpenMoreService(true)}>
                         More Service
                     </Button>
                 </ListItem>
@@ -120,9 +133,9 @@ export default function MenuDrawer({items, handleNewItem}) {
             <List component="nav" dense>
                 <ListItemButton onClick={() => clientDisconnect()}>
                     <ListItemIcon>
-                        <LogoutIcon />
+                        <LogoutIcon/>
                     </ListItemIcon>
-                    <ListItemText primary="Logout" />
+                    <ListItemText primary="Logout"/>
                 </ListItemButton>
             </List>
         </Box>

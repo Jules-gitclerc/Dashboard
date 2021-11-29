@@ -56,7 +56,7 @@ export default function Search({handleConnected}) {
         {isLoading ? <Grid container item xs={12} justifyContent={'center'}>
             <CircularProgress/>
         </Grid> : <Grid container item xs={12} style={{height: 'calc(100% - 115px)', overflow: 'auto'}}>
-            <List dense>
+            <List dense style={{width: '100%'}}>
                 {data.map(item => <SubredditItem key={`${item.name} ${item.subscribers}`} data={item} setIsError={setIsError}/>)}
             </List>
         </Grid>}

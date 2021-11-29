@@ -8,4 +8,5 @@ module.exports = function (app) {
 
     require('./Get/Get')(app);
     require('./Post/Post')(app);
+    require('./Put/Put')(app);
 };
