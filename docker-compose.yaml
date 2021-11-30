@@ -12,8 +12,23 @@ services:
           MYSQL_USER: "admin"
           MYSQL_PASSWORD: "password"
           MARIADB_ROOT_PASSWORD: "password"
-          MYSQL_TCP_PORT: 3307
+          MYSQL_TCP_PORT: 3306
       ports:
-         - '3307:3307'
+         - '3306:3306'
+
+  back:
+      build: ./dashboard-back
+      ports:
+        - "8080:8080"
+      links:
+        - mariadb:mariadb
+      depends_on:
+        - mariadb
+
+  front:
+      build: ./dashboard-front
+      ports:
+        - "3000:3000"
+
 volumes:
   db-data:

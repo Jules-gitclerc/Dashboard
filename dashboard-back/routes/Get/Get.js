@@ -4,7 +4,7 @@ module.exports = function (app) {
     /*
         About fct
      */
-    app.get('/about', require('./About/about'));
+    app.get('/about', require('./About/About'));
     app.get('/about.json', require('./About/AboutJson'));
 
     /*
