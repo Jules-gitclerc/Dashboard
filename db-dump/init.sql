@@ -13,6 +13,8 @@ CREATE TABLE User(
     password varchar(255) not null,
     phone varchar(255) not null,
     is_identified bool,
+    avatar varchar(255),
+    auth varchar(255),
     primary key(user_id)
 );
 
@@ -23,5 +25,14 @@ CREATE TABLE Services(
     name varchar(255) not null
 );
 
-INSERT INTO Services(service_id, name) VALUES (1, 'Reddit');
-INSERT INTO Services(service_id, name) VALUES (2, 'League of legends');
+INSERT INTO Services(service_id, name) VALUES (10, 'Reddit');
+INSERT INTO Services(service_id, name) VALUES (20, 'League of legends');
+INSERT INTO Services(service_id, name) VALUES (30, 'Weather');
+
+
+--Table Link User to Service--
+
+CREATE TABLE Services(
+    id_service int,
+    id_user int
+);

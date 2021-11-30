@@ -91,7 +91,6 @@ export default function DashBoard({handleTriggerConnected}) {
     }
 
     const handleThemeChange = (primary, secondary) => {
-        console.log("je suis la");
         setTheme(createTheme({
             palette: {
                 primary: {
