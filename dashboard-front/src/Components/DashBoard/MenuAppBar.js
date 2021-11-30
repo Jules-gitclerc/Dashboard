@@ -30,7 +30,7 @@ export default function MenuAppBar({userData, drawerOpen, handleDrawer, handleTh
                 <Grid container item xs={2} alignItems={'center'} justifyContent={"space-between"}>
                     <Grid container item xs={1} style={{height: '100%'}} alignItems={'center'} justifyContent={'center'} direction={'column'}>
                         <IconButton onClick={() => handleDrawer(!drawerOpen)}>
-                            <MenuIcon/>
+                            <MenuIcon color="secondary"/>
                         </IconButton>
                     </Grid>
                     <Grid container item xs={7} style={{height: '100%', border: '1px solid', padding: 8, borderRadius: 20}} alignItems={'center'} justifyContent={'space-around'}>
@@ -54,7 +54,7 @@ export default function MenuAppBar({userData, drawerOpen, handleDrawer, handleTh
                                             sx={{ display: 'inline' }}
                                             component="span"
                                             variant="body2"
-                                            color="text.primary"
+                                            color="secondary"
                                         >
                                             {userData.name}
                                         </Typography>
