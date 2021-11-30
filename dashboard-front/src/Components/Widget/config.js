@@ -1,5 +1,6 @@
 import SearchIcon from '@mui/icons-material/Search';
 import ImageIcon from '@mui/icons-material/Image';
+import InventoryIcon from '@mui/icons-material/Inventory';
 
 import Reddit from "./Reddit/Reddit";
 import SearchChampion from "./LeagueOfLegend/SearchChampion/SearchChampion";
@@ -11,6 +12,7 @@ export const REDDIT_SEARCH = 12
 
 export const LEAGUE_OF_LEGEND = 20
 export const LEAGUE_OF_LEGEND_SEARCH_CHAMPION = 21
+export const LEAGUE_OF_LEGEND_SEARCH_ITEM = 22
 
 export const WEATHER = 30
 export const WEATHER_SEARCH = 31
@@ -47,6 +49,14 @@ let widgetConfig = [
         icon: <SearchIcon/>,
         size: {w: 6, h: 5, x: 0, y: Infinity},
         component: <Weather/>,
+    },
+    {
+        id: LEAGUE_OF_LEGEND_SEARCH_ITEM,
+        label: 'Inventory',
+        logoService: 'Images/LogoApi/league_of_legends.png',
+        icon: <InventoryIcon/>,
+        size: {w: 6, h: 5, x: 0, y: Infinity},
+        component: <div> inventory </div>,
     }
 ]
 
@@ -67,6 +77,7 @@ let serviceConfig = [
         logoService: 'Images/LogoApi/league_of_legends.png',
         widget: [
             widgetConfig.find(elem => elem.id === LEAGUE_OF_LEGEND_SEARCH_CHAMPION),
+            widgetConfig.find(elem => elem.id === LEAGUE_OF_LEGEND_SEARCH_ITEM),
         ]
     },
     {

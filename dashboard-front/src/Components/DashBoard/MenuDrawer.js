@@ -23,7 +23,7 @@ import AddIcon from '@mui/icons-material/Add';
 import MenuIcon from "@mui/icons-material/Menu";
 import DialogServices from "./DialogServices/DialogServices";
 
-export const drawerWidth = 200;
+export const drawerWidth = 240;
 
 function CollapseServiceWidget({data, handleNewItem, items}) {
     const [openCollapse, setOpenCollapse] = useState(false);
