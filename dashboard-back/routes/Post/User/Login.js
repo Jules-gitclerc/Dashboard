@@ -26,7 +26,7 @@ function getUserGoogle(body) {
         try {
             let sqlRequest = `SELECT * FROM User WHERE email='${body.email}' AND auth='google';`
             let data = await database.request(sqlRequest);
-            if (data.length > 0) {
+            if (undefined !== data && data.length > 0) {
                 resolve(data[0]);
             } else {
                 resolve({
@@ -56,7 +56,7 @@ function hashCheck(body, hash) {
 module.exports = async function (req, res) {
     let user;
 
-    if (req.body.auth == 'google')
+    if (req.body.auth === 'google')
         user = await getUserGoogle(req.body);
     else
         user = await getUser(req.body);
@@ -65,7 +65,7 @@ module.exports = async function (req, res) {
         res.send({
             error: user.error
         }).status(200);
-    } else if (req.body.auth != 'google') {
+    } else if (req.body.auth !== 'google') {
         let checkPassword = await hashCheck(req.body, user.password);
 
         if (checkPassword) {
