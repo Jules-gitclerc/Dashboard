@@ -13,7 +13,8 @@ export default function Weather() {
     async function handleFilter(countryCode, city) {
         try {
             setIsLoading(true)
-            const response = await axios.get(`https://api.openweathermap.org/data/2.5/weather?q=${city},${countryCode}&appid=0144563c0b4b1a1065fde914246dbb87`); //todo api key get from back
+            const response = await axios.post(`${process.env.REACT_APP_DASHBOARD_API}/weather/data`, {city: city, countryCode: countryCode},
+                {'headers': {'Authorization': `Bearer  ${localStorage.getItem('token')}`}})
             setData(response.data)
             setIsLoading(false)
         } catch (err) {

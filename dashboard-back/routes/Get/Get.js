@@ -22,4 +22,10 @@ module.exports = function (app) {
         Google
     */
     app.get('/google/O-Auth', require('./Google/GoogleAuth'));
+
+    /*
+        Weather
+     */
+    app.get('/weather/country', token.checkTokenMiddleware, require('./Weather/DataWeather'));
+    app.post('/weather/data', token.checkTokenMiddleware, require('./Weather/weather'));
 }
