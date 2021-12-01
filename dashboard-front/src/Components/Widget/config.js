@@ -5,6 +5,7 @@ import InventoryIcon from '@mui/icons-material/Inventory';
 import Reddit from "./Reddit/Reddit";
 import SearchChampion from "./LeagueOfLegend/SearchChampion/SearchChampion";
 import Weather from "./Weather/Weather";
+import CryptoSearchData from "./Crypto/CryptoSearchByDate";
 
 export const REDDIT = 10
 export const REDDIT_POSTS = 11
@@ -18,6 +19,7 @@ export const WEATHER = 30
 export const WEATHER_SEARCH = 31
 
 export const CRYTPO = 40
+export const CRYPTO_SEARCH_BY_DATE = 41
 
 export const widgetConfig = [
     {
@@ -59,6 +61,14 @@ export const widgetConfig = [
         icon: <InventoryIcon/>,
         size: {w: 6, h: 5, x: 0, y: Infinity},
         component: <div> inventory </div>,
+    },
+    {
+        id: CRYPTO_SEARCH_BY_DATE,
+        label: 'Search by date',
+        logoService: 'Images/LogoApi/coingeko.png',
+        icon: <SearchIcon/>,
+        size: {w: 6, h: 5, x: 0, y: Infinity},
+        component: <CryptoSearchData/>,
     }
 ]
 
@@ -94,7 +104,9 @@ const serviceConfig = [
         id: CRYTPO,
         label: 'Crypto',
         logoService: 'Images/LogoApi/coingeko.png',
-        widget: []
+        widget: [
+            widgetConfig.find(elem => elem.id === CRYPTO_SEARCH_BY_DATE),
+        ]
     }
 ]
 
