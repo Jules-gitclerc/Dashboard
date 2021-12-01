@@ -29,10 +29,16 @@ INSERT INTO Services(service_id, name) VALUES (10, 'Reddit');
 INSERT INTO Services(service_id, name) VALUES (20, 'League of legends');
 INSERT INTO Services(service_id, name) VALUES (30, 'Weather');
 
-
 --Table Link User to Service--
 
 CREATE TABLE Services(
     id_service int,
+    id_user int
+);
+
+--Table Widget--
+
+CREATE TABLE Widget(
+    id_widget varchar(255) not null,
     id_user int
 );

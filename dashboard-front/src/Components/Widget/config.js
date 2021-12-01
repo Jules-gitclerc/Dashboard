@@ -17,7 +17,7 @@ export const LEAGUE_OF_LEGEND_SEARCH_ITEM = 22
 export const WEATHER = 30
 export const WEATHER_SEARCH = 31
 
-let widgetConfig = [
+export const widgetConfig = [
     {
         id: REDDIT_POSTS,
         label: 'Reddit Posts',
@@ -61,7 +61,7 @@ let widgetConfig = [
 ]
 
 
-let serviceConfig = [
+const serviceConfig = [
     {
         id: REDDIT,
         label: 'Reddit',
@@ -89,6 +89,5 @@ let serviceConfig = [
         ]
     }
 ]
-
 
 export default serviceConfig;

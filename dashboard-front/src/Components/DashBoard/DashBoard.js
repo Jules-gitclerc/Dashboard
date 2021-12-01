@@ -7,6 +7,7 @@ import {CircularProgress, createTheme} from "@mui/material";
 import axios from "axios";
 import {ThemeProvider} from "@emotion/react";
 import clsx from 'clsx';
+import {widgetConfig} from "../Widget/config";
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -49,6 +50,20 @@ export default function DashBoard({handleTriggerConnected}) {
                 const response = await axios.get(`${process.env.REACT_APP_DASHBOARD_API}/userData`,
                     {'headers': {'Authorization': `Bearer  ${localStorage.getItem('token')}`}})
                 setUserData(response.data);
+                console.log(response.data.widget)
+                let itemData = []
+                response.data.widget.forEach((elem) => {
+                    let tab = elem.id_widget.split('-');
+                    let target = widgetConfig.find(item => item.id === parseInt(tab[0]))
+
+                    if (target) {
+                        target.idRef = elem.id_widget;
+                        itemData.push(target)
+                    }
+
+
+                })
+                setItems(itemData);
                 setTheme(createTheme({
                     palette: {
                         mode: 'light',
@@ -79,6 +94,23 @@ export default function DashBoard({handleTriggerConnected}) {
         </div>
 
     const handleNewItem = (model) => {
+        let count = 0;
+
+        items.forEach(elem => {
+            if (elem.id === model.id)
+                count += 1
+        })
+        model.idRef = `${model.id}-${count}`;
+        console.log(model);
+        (async () => {
+            try {
+                await axios.post(`${process.env.REACT_APP_DASHBOARD_API}/service/widget`, {idWidget: model.idRef},
+                    {'headers': {'Authorization': `Bearer  ${localStorage.getItem('token')}`}})
+                console.log(model);
+            } catch (err) {
+                console.log(err);
+            }
+        })()
         setItems([...items, model]);
     }
 

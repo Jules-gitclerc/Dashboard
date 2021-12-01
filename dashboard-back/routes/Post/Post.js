@@ -8,4 +8,9 @@ module.exports = function (app) {
     app.post('/login', require('./User/Login'));
     app.post('/disconnect', token.checkTokenMiddleware, require('./User/Disconnect'));
     app.post('/identified', require('./User/Identified'));
+
+    /*
+        Services
+     */
+    app.post('/service/widget', token.checkTokenMiddleware, require('./Services/AddNewServices'));
 }

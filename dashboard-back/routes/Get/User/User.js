@@ -39,10 +39,28 @@ function getServicesById(id) {
     })
 }
 
+function getWidgetById(id) {
+    return new Promise(async (resolve, reject) => {
+        try {
+            let sqlRequest = `SELECT id_widget FROM Widget WHERE id_user=${id};`
+            let data = await database.request(sqlRequest);
+            if (data.length > 0) {
+                resolve(data);
+            } else {
+                resolve([])
+            }
+        } catch (err) {
+            console.log('err', err)
+            reject(err)
+        }
+    })
+}
+
 module.exports = async function(req, res) {
     let dataToken = token.getTokenData(req);
     let data = await getUserById(dataToken.id_user);
-    let service = await getServicesById(dataToken.id_user)
+    let service = await getServicesById(dataToken.id_user);
+    let widget = await getWidgetById(dataToken.id_user);
 
     res.send({
         username: data.username,
@@ -51,6 +69,7 @@ module.exports = async function(req, res) {
         email: data.email,
         isIdentified: data.is_identified,
         avatar: data.avatar,
+        widget: widget,
         services: (!service.error ? service : []),
         firstName: data.first_name,
         lastName: data.last_name,

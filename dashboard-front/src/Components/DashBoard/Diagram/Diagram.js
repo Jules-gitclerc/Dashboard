@@ -5,6 +5,7 @@ import 'react-grid-layout/css/styles.css';
 import 'react-resizable/css/styles.css';
 import {Avatar, Divider, Grid, IconButton, Paper, Typography} from "@mui/material";
 import CloseIcon from '@mui/icons-material/Close';
+import axios from "axios";
 
 function getFromLS(key) {
     let ls = {};
@@ -27,6 +28,14 @@ function Diagram({items, setItems, size: {width}}) {
     };
 
     const onRemoveItem = (itemId) => {
+        (async () => {
+            try {
+                await axios.delete(`${process.env.REACT_APP_DASHBOARD_API}/service/widget/${itemId.idRef}`,
+                    {'headers': {'Authorization': `Bearer  ${localStorage.getItem('token')}`}})
+            } catch (err) {
+                console.log(err);
+            }
+        })()
         setItems(items.filter((i) => i !== itemId));
     };
 
@@ -42,7 +51,7 @@ function Diagram({items, setItems, size: {width}}) {
         >
             {items.map((key) => (
                 <div
-                    key={key.id}
+                    key={key.idRef}
                     className="widget"
                     data-grid={key.size}
                 >
