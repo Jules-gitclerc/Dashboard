@@ -13,7 +13,7 @@ import {
 import React, {useState} from "react";
 import pagesConfig from "./pagesConfig";
 import {Redirect, useHistory} from "react-router-dom";
-import {useRouteMatch} from "react-router";
+import {Route, useRouteMatch} from "react-router";
 import serviceConfig from "../Widget/config";
 import {ExpandLess, ExpandMore} from "@mui/icons-material";
 import LogoutIcon from "@mui/icons-material/Logout";
@@ -34,7 +34,7 @@ function CollapseServiceWidget({data, handleNewItem, items}) {
 
     return <><ListItem button onClick={handleClickCollapse}>
         <ListItemIcon>
-            <Avatar src={data.logo} alt={`${data.label} ${data.id}`} style={{height: 30, width: 30}}/>
+            <Avatar src={data.logoService} alt={`${data.label} ${data.id}`} style={{height: 30, width: 30}}/>
         </ListItemIcon>
         <ListItemText primary={data.label}/>
         {openCollapse ? <ExpandLess/> : <ExpandMore/>}
@@ -113,29 +113,31 @@ export default function MenuDrawer({items, handleNewItem, userData, drawerOpen, 
                 </ListItem>)}
             </List>
             <Divider/>
-            <List
-                dense
-                component="nav"
-                subheader={
-                    <ListSubheader component="div">
-                        Services and Widget
-                    </ListSubheader>
-                }
-            >
-                {serviceConfig.map(item => {
-                    if (userData.services.find(elem => elem.id_service === item.id))
-                        return <CollapseServiceWidget key={`Service = ${item.id}`} data={item}
-                                           handleNewItem={handleNewItem} items={items}/>
-                    return null;
-                })}
-                <ListItem>
-                    <Button startIcon={<AddIcon/>} fullWidth variant={'contained'}
-                            style={{padding: 0, borderRadius: 10}} onClick={() => setOpenMoreService(true)}>
-                        More Service
-                    </Button>
-                </ListItem>
-            </List>
-            <Divider/>
+            <Route exact path={'/App'}>
+                <List
+                    dense
+                    component="nav"
+                    subheader={
+                        <ListSubheader component="div">
+                            Services and Widget
+                        </ListSubheader>
+                    }
+                >
+                    {serviceConfig.map(item => {
+                        if (userData.services.find(elem => elem.id_service === item.id))
+                            return <CollapseServiceWidget key={`Service = ${item.id}`} data={item}
+                                                          handleNewItem={handleNewItem} items={items}/>
+                        return null;
+                    })}
+                    <ListItem>
+                        <Button startIcon={<AddIcon/>} fullWidth variant={'contained'}
+                                style={{padding: 0, borderRadius: 10}} onClick={() => setOpenMoreService(true)}>
+                            More Service
+                        </Button>
+                    </ListItem>
+                </List>
+                <Divider/>
+            </Route>
             <List component="nav" dense>
                 <ListItemButton onClick={() => clientDisconnect()}>
                     <ListItemIcon>

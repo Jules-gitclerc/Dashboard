@@ -9,7 +9,7 @@ export default function DialogTheme({open, handleClose, handleChangeTheme}) {
         </DialogTitle>
         <DialogContent>
             <Grid container item xs={12} spacing={2} justifyContent={'space-around'}>
-                {dataTheme.map(item => <Grid key={`${item.label} - ${item.id}`} container item xs={4} onClick={() => handleChangeTheme(item.primary, item.secondary)}>
+                {dataTheme.map(item => <Grid key={`${item.label} - ${item.id}`} container item xs={4} onClick={() => handleChangeTheme(item.primary, item.secondary, item.id)}>
                     <Paper elevation={3} style={{width: '100%'}}>
                         <Grid container item xs={12} style={{height: 100}}>
                             <Grid item xs={6} style={{height: '100%', background: item.primary, borderTopLeftRadius: 8}}/>

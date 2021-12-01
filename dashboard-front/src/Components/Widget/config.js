@@ -5,6 +5,7 @@ import InventoryIcon from '@mui/icons-material/Inventory';
 import Reddit from "./Reddit/Reddit";
 import SearchChampion from "./LeagueOfLegend/SearchChampion/SearchChampion";
 import Weather from "./Weather/Weather";
+import CryptoSearchData from "./Crypto/CryptoSearchByDate";
 
 export const REDDIT = 10
 export const REDDIT_POSTS = 11
@@ -17,7 +18,10 @@ export const LEAGUE_OF_LEGEND_SEARCH_ITEM = 22
 export const WEATHER = 30
 export const WEATHER_SEARCH = 31
 
-let widgetConfig = [
+export const CRYTPO = 40
+export const CRYPTO_SEARCH_BY_DATE = 41
+
+export const widgetConfig = [
     {
         id: REDDIT_POSTS,
         label: 'Reddit Posts',
@@ -57,15 +61,23 @@ let widgetConfig = [
         icon: <InventoryIcon/>,
         size: {w: 6, h: 5, x: 0, y: Infinity},
         component: <div> inventory </div>,
+    },
+    {
+        id: CRYPTO_SEARCH_BY_DATE,
+        label: 'Search by date',
+        logoService: 'Images/LogoApi/coingeko.png',
+        icon: <SearchIcon/>,
+        size: {w: 6, h: 5, x: 0, y: Infinity},
+        component: <CryptoSearchData/>,
     }
 ]
 
 
-let serviceConfig = [
+const serviceConfig = [
     {
         id: REDDIT,
         label: 'Reddit',
-        logo: 'Images/LogoApi/reddit.png',
+        logoService: 'Images/LogoApi/reddit.png',
         widget: [
             widgetConfig.find(elem => elem.id === REDDIT_POSTS),
             widgetConfig.find(elem => elem.id === REDDIT_SEARCH),
@@ -87,8 +99,15 @@ let serviceConfig = [
         widget: [
             widgetConfig.find(elem => elem.id === WEATHER_SEARCH),
         ]
+    },
+    {
+        id: CRYTPO,
+        label: 'Crypto',
+        logoService: 'Images/LogoApi/coingeko.png',
+        widget: [
+            widgetConfig.find(elem => elem.id === CRYPTO_SEARCH_BY_DATE),
+        ]
     }
 ]
-
 
 export default serviceConfig;
