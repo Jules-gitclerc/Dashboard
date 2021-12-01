@@ -17,6 +17,8 @@ export const LEAGUE_OF_LEGEND_SEARCH_ITEM = 22
 export const WEATHER = 30
 export const WEATHER_SEARCH = 31
 
+export const CRYTPO = 40
+
 export const widgetConfig = [
     {
         id: REDDIT_POSTS,
@@ -65,7 +67,7 @@ const serviceConfig = [
     {
         id: REDDIT,
         label: 'Reddit',
-        logo: 'Images/LogoApi/reddit.png',
+        logoService: 'Images/LogoApi/reddit.png',
         widget: [
             widgetConfig.find(elem => elem.id === REDDIT_POSTS),
             widgetConfig.find(elem => elem.id === REDDIT_SEARCH),
@@ -87,6 +89,12 @@ const serviceConfig = [
         widget: [
             widgetConfig.find(elem => elem.id === WEATHER_SEARCH),
         ]
+    },
+    {
+        id: CRYTPO,
+        label: 'Crypto',
+        logoService: 'Images/LogoApi/coingeko.png',
+        widget: []
     }
 ]
 

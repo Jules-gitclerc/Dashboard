@@ -29,6 +29,7 @@ CREATE TABLE Services(
 INSERT INTO Services(service_id, name) VALUES (10, 'Reddit');
 INSERT INTO Services(service_id, name) VALUES (20, 'League of legends');
 INSERT INTO Services(service_id, name) VALUES (30, 'Weather');
+INSERT INTO Services(service_id, name) VALUES (40, 'Crypto');
 
 --Table Link User to Service--
 

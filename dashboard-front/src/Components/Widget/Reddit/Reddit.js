@@ -53,7 +53,7 @@ export default function Reddit({widget}) {
                 <Paper style={{width: '100%', padding: 30}} elevation={6}>
                     <Grid container item xs={12} spacing={3}>
                         <Grid container item xs={12} justifyContent={'center'} alignItems={'center'} direction={'column'}>
-                            <Avatar sx={{m: 1, bgcolor: 'red'}}>
+                            <Avatar sx={{m: 1, bgcolor: 'secondary.light'}}>
                                 <LockIcon/>
                             </Avatar>
                             <Typography variant='h4'>

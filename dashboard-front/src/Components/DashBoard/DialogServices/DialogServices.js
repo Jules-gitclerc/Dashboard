@@ -32,7 +32,7 @@ export default function DialogServices({open, handleClose, userData}) {
                     tab.push({
                         id: elem.id,
                         label: elem.label,
-                        logo: elem.logo,
+                        logo: elem.logoService,
                         checked: !!userData.services.find(item => item.id_service === elem.id),
                     })
                 })
