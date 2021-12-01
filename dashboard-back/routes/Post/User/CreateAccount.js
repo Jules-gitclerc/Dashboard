@@ -137,7 +137,7 @@ function identificationMail(mail, userId, username) {
         from: 'yodash246@gmail.com',
         to: mail,
         subject: 'Identification Mail from YODASH',
-        text: `http://${results["en0"][0]}:3000/identification/${userId}/${username}`
+        text: `http://localhost:3000/identification/${userId}/${username}`
     };
 
     transporter.sendMail(mailOptions, function (error, info) {
