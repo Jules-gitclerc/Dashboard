@@ -24,7 +24,7 @@ function SubscribeToReddit({data}) {
                 }
             }
         })()
-    }, [])
+    }, [data.name])
 
     function onSub() {
         (async () => {
