@@ -8,6 +8,7 @@ import axios from "axios";
 import {ThemeProvider} from "@emotion/react";
 import clsx from 'clsx';
 import {widgetConfig} from "../Widget/config";
+import dataTheme from "./DialogTheme/dataTheme";
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -64,11 +65,24 @@ export default function DashBoard({handleTriggerConnected}) {
 
                 })
                 setItems(itemData);
-                setTheme(createTheme({
-                    palette: {
-                        mode: 'light',
-                    }
-                }))
+                if (response.data.idTheme) {
+                    setTheme(createTheme({
+                        palette: {
+                            primary: {
+                                main: dataTheme.find(elem => elem.id === response.data.idTheme).primary,
+                            },
+                            secondary: {
+                                main: dataTheme.find(elem => elem.id === response.data.idTheme).secondary,
+                            },
+                        },
+                    }))
+                } else {
+                    setTheme(createTheme({
+                        palette: {
+                            mode: 'light',
+                        }
+                    }))
+                }
                 setIsLoading(false)
                 setIsReload(false)
             } catch (err) {
@@ -101,7 +115,6 @@ export default function DashBoard({handleTriggerConnected}) {
                 count += 1
         })
         model.idRef = `${model.id}-${count}`;
-        console.log(model);
         (async () => {
             try {
                 await axios.post(`${process.env.REACT_APP_DASHBOARD_API}/service/widget`, {idWidget: model.idRef},
@@ -122,7 +135,15 @@ export default function DashBoard({handleTriggerConnected}) {
         setIsReload(isToReload)
     }
 
-    const handleThemeChange = (primary, secondary) => {
+    const handleThemeChange = (primary, secondary, id) => {
+        (async () => {
+            try {
+                await axios.post(`${process.env.REACT_APP_DASHBOARD_API}/theme`, {idTheme: id},
+                    {'headers': {'Authorization': `Bearer  ${localStorage.getItem('token')}`}})
+            } catch (err) {
+                console.log(err);
+            }
+        })()
         setTheme(createTheme({
             palette: {
                 primary: {

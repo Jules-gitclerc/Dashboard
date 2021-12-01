@@ -15,6 +15,7 @@ CREATE TABLE User(
     is_identified bool,
     avatar varchar(255),
     auth varchar(255),
+    id_theme int,
     primary key(user_id)
 );
 

@@ -70,6 +70,7 @@ module.exports = async function(req, res) {
         isIdentified: data.is_identified,
         avatar: data.avatar,
         widget: widget,
+        idTheme: data.id_theme,
         services: (!service.error ? service : []),
         firstName: data.first_name,
         lastName: data.last_name,

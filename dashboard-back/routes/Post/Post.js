@@ -13,4 +13,9 @@ module.exports = function (app) {
         Services
      */
     app.post('/service/widget', token.checkTokenMiddleware, require('./Services/AddNewServices'));
+
+    /*
+        Theme
+     */
+    app.post('/theme', token.checkTokenMiddleware, require('./Theme/changeTheme'));
 }
