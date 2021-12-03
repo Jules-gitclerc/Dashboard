@@ -7,6 +7,7 @@ import ChampionDisplay from "./ChampionDisplay";
 
 export default function SearchChampion() {
     const [select, setSelect] = useState(null);
+    //const [type, setType] = useState('');
     const [isError, setIsError] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
     const [data, setData] = useState(null);
@@ -18,7 +19,6 @@ export default function SearchChampion() {
             try {
                 setIsLoading(true)
                 const response = await axios.get(`http://ddragon.leagueoflegends.com/cdn/11.23.1/data/en_US/champion/${select.id}.json`);
-                console.log(response.data.data[select.id])
                 setData(response.data.data[select.id])
                 setIsLoading(false)
             } catch (err) {

@@ -128,7 +128,7 @@ export default function CreateAccount({handleTriggerConnected}) {
                 setIsLoading(true)
                 const response = await axios.post(`${process.env.REACT_APP_DASHBOARD_API}/createAccount`, body);
                 if (response.data.error) {
-                    setIsError(true);
+                    setIsError(true); // et le catch dans l'histoire ?
                 } else {
                     localStorage.setItem('token', response.data.access_token);
                     setIsSend(true);
@@ -353,7 +353,7 @@ export default function CreateAccount({handleTriggerConnected}) {
                                       justifyContent={'space-between'}>
                                     <Grid container item xs={4} alignItems={'center'} spacing={2}>
                                         <Grid item>
-                                            <img alt={item.name} src={item.logo} style={{width: 30, height: 'auto'}}/>
+                                            <img alt={item.name} src={item.logoService} style={{width: 30, height: 'auto'}}/>
                                         </Grid>
                                         <Grid item>
                                             <Typography variant='h6'>

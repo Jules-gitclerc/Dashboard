@@ -3,19 +3,19 @@ const mariadb = require('mariadb');
 const pool = mariadb.createPool({
     connectionLimit: 5,
     user: 'admin',
-    password: 'password',
-    host: 'mariadb',
+    password: 'admin',
+    host: 'localhost',
     database: 'dashboard',
-    port: '3307'
+    port: '3306'
 });
 
-async function request(sql) {
+async function request(sql, tab) {
     let conn;
     let res;
 
     try {
         conn = await pool.getConnection();
-        res = await conn.query(sql);
+        res = await conn.query(sql, tab);
     } catch (err) {
         throw err;
     } finally {

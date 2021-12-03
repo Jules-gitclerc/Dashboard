@@ -5,8 +5,9 @@ const bcrypt = require("bcrypt");
 function getUser(body) {
     return new Promise(async (resolve, reject) => {
         try {
-            let sqlRequest = `SELECT * FROM User WHERE username='${body.username}';`
-            let data = await database.request(sqlRequest);
+            let sqlRequest = `SELECT * FROM User WHERE username=?;`
+
+            let data = await database.request(sqlRequest, [body.username]);
             if (data.length > 0) {
                 resolve(data[0]);
             } else {
@@ -24,8 +25,9 @@ function getUser(body) {
 function getUserGoogle(body) {
     return new Promise(async (resolve, reject) => {
         try {
-            let sqlRequest = `SELECT * FROM User WHERE email='${body.email}' AND auth='google';`
-            let data = await database.request(sqlRequest);
+            let sqlRequest = `SELECT * FROM User WHERE email=? AND auth='google';`
+
+            let data = await database.request(sqlRequest, [body.email]);
             if (undefined !== data && data.length > 0) {
                 resolve(data[0]);
             } else {

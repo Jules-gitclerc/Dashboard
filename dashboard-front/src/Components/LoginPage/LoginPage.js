@@ -22,7 +22,12 @@ export default function LoginPage({handleTriggerConnected}) {
     const responseGoogle = (response) => {
         console.log(response);
         (async () => {
-            await loginInSerer('google', response.profileObj.name, response.profileObj.googleId, response.profileObj.email)
+            try {
+                await loginInSerer('google', response.profileObj.name, response.profileObj.googleId, response.profileObj.email)
+            } catch (err) {
+                console.log(err);
+            }
+
         })()
     }
 

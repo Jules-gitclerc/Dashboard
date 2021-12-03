@@ -4,8 +4,8 @@ const database = require("../../../config/Database");
 function addWidgetByUser(id_widget, id_user) {
     return new Promise(async (resolve, reject) => {
         try {
-            let sqlRequest = `INSERT INTO Widget(id_widget, id_user) VALUES ('${id_widget}', ${id_user});`
-            await database.request(sqlRequest);
+            let sqlRequest = `INSERT INTO Widget(id_widget, id_user) VALUES (?, ?);`
+            await database.request(sqlRequest, [id_widget, id_user]);
             resolve();
         } catch (err) {
             console.log('err', err)
