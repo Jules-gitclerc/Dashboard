@@ -4,7 +4,8 @@ WORKDIR /app
 
 COPY package*.json .
 
-RUN npm install
+RUN corepack enable
+RUN yarn install
 
 COPY . /app
 
@@ -12,4 +13,4 @@ ENV PORT=8080
 
 EXPOSE 8080
 
-CMD [ "npm", "start" ]
+CMD [ "yarn", "start" ]

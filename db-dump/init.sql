@@ -33,7 +33,7 @@ INSERT INTO Services(service_id, name) VALUES (40, 'Crypto');
 
 --Table Link User to Service--
 
-CREATE TABLE Services(
+CREATE TABLE LinkUserServices(
     id_service int,
     id_user int
 );

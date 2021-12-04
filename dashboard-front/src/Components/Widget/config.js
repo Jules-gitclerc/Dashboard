@@ -6,6 +6,7 @@ import Reddit from "./Reddit/Reddit";
 import SearchChampion from "./LeagueOfLegend/SearchChampion/SearchChampion";
 import Weather from "./Weather/Weather";
 import CryptoSearchData from "./Crypto/CryptoSearchByDate";
+import ItemModule from "./LeagueOfLegend/ItemModule/ItemModule";
 
 export const REDDIT = 10
 export const REDDIT_POSTS = 11
@@ -27,7 +28,7 @@ export const widgetConfig = [
         label: 'Reddit Posts',
         logoService: 'Images/LogoApi/reddit.png',
         icon: <ImageIcon/>,
-        size: {w: 5, h: 10, x: 0, y: Infinity},
+        size: {w: 6, h: 10, x: 0, y: Infinity},
         component: <Reddit widget={REDDIT_POSTS}/>,
     },
     {
@@ -43,7 +44,7 @@ export const widgetConfig = [
         label: 'Search champion',
         logoService: 'Images/LogoApi/league_of_legends.png',
         icon: <SearchIcon/>,
-        size: {w: 6, h: 5, x: 0, y: Infinity},
+        size: {w: 7, h: 7, x: 0, y: Infinity},
         component: <SearchChampion/>,
     },
     {
@@ -51,7 +52,7 @@ export const widgetConfig = [
         label: 'Search Weather',
         logoService: 'Images/LogoApi/weather.png',
         icon: <SearchIcon/>,
-        size: {w: 6, h: 5, x: 0, y: Infinity},
+        size: {w: 5, h: 5, x: 0, y: Infinity},
         component: <Weather/>,
     },
     {
@@ -59,15 +60,15 @@ export const widgetConfig = [
         label: 'Inventory',
         logoService: 'Images/LogoApi/league_of_legends.png',
         icon: <InventoryIcon/>,
-        size: {w: 6, h: 5, x: 0, y: Infinity},
-        component: <div> inventory </div>,
+        size: {w: 7, h: 6, x: 0, y: Infinity},
+        component: <ItemModule/>,
     },
     {
         id: CRYPTO_SEARCH_BY_DATE,
         label: 'Search by date',
         logoService: 'Images/LogoApi/coingeko.png',
         icon: <SearchIcon/>,
-        size: {w: 6, h: 5, x: 0, y: Infinity},
+        size: {w: 4, h: 4, x: 0, y: Infinity},
         component: <CryptoSearchData/>,
     }
 ]

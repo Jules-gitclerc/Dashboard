@@ -8,8 +8,8 @@ function createNewAccount(body) {
     return new Promise((resolve, reject) => {
         try {
             bcrypt.hash(body.password, 10, async (err, hash) => {
-                let sqlRequest = `INSERT INTO User (username, first_name, last_name, email, password, phone, is_identified, avatar, auth) VALUES ('${body.username}', '${body.firstName}', '${body.lastName}', '${body.mail}', '${hash}', '${body.phone}', false, '${body.avatar}', '${body.auth}');`
-                await database.request(sqlRequest);
+                let sqlRequest = `INSERT INTO User (username, first_name, last_name, email, password, phone, is_identified, avatar, auth) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?);`
+                await database.request(sqlRequest, [body.username, body.firstName, body.lastName, body.mail, hash, body.phone, false, body.avatar, body.auth]);
                 resolve();
             })
         } catch (err) {
@@ -137,7 +137,7 @@ function identificationMail(mail, userId, username) {
         from: 'yodash246@gmail.com',
         to: mail,
         subject: 'Identification Mail from YODASH',
-        text: `http://localhost:3000/identification/${userId}/${username}`
+        text: `http://192.168.1.69:3000/identification/${userId}/${username}`
     };
 
     transporter.sendMail(mailOptions, function (error, info) {

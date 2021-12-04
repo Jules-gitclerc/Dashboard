@@ -9,13 +9,13 @@ const pool = mariadb.createPool({
     port: '3307'
 });
 
-async function request(sql) {
+async function request(sql, tab) {
     let conn;
     let res;
 
     try {
         conn = await pool.getConnection();
-        res = await conn.query(sql);
+        res = await conn.query(sql, tab);
     } catch (err) {
         throw err;
     } finally {

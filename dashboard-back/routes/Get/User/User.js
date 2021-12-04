@@ -4,8 +4,8 @@ const token = require("../../../config/Token");
 function getUserById(id) {
     return new Promise(async (resolve, reject) => {
         try {
-            let sqlRequest = `SELECT * FROM User WHERE user_id='${id}';`
-            let data = await database.request(sqlRequest);
+            let sqlRequest = `SELECT * FROM User WHERE user_id=?;`
+            let data = await database.request(sqlRequest, [id]);
             if (data.length > 0) {
                 resolve(data[0]);
             } else {
@@ -23,8 +23,8 @@ function getUserById(id) {
 function getServicesById(id) {
     return new Promise(async (resolve, reject) => {
         try {
-            let sqlRequest = `SELECT id_service FROM LinkUserServices WHERE id_user = ${id};`
-            let data = await database.request(sqlRequest);
+            let sqlRequest = `SELECT id_service FROM LinkUserServices WHERE id_user = ?;`
+            let data = await database.request(sqlRequest, [id]);
             if (data.length > 0) {
                 resolve(data);
             } else {
@@ -42,8 +42,8 @@ function getServicesById(id) {
 function getWidgetById(id) {
     return new Promise(async (resolve, reject) => {
         try {
-            let sqlRequest = `SELECT id_widget FROM Widget WHERE id_user=${id};`
-            let data = await database.request(sqlRequest);
+            let sqlRequest = `SELECT id_widget FROM Widget WHERE id_user=?;`
+            let data = await database.request(sqlRequest, [id]);
             if (data.length > 0) {
                 resolve(data);
             } else {

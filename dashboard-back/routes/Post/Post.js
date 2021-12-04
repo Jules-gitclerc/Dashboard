@@ -6,7 +6,7 @@ module.exports = function (app) {
      */
     app.post('/createAccount', require('./User/CreateAccount'));
     app.post('/login', require('./User/Login'));
-    app.post('/disconnect', token.checkTokenMiddleware, require('./User/Disconnect'));
+    app.post('/disconnect', require('./User/Disconnect'));
     app.post('/identified', require('./User/Identified'));
 
     /*

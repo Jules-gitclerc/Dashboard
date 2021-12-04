@@ -4,6 +4,7 @@ WORKDIR /app
 
 COPY package*.json .
 
+RUN corepack enable
 RUN yarn install
 
 COPY . /app

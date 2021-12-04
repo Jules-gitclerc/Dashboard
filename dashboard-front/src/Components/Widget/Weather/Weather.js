@@ -15,7 +15,10 @@ export default function Weather() {
             setIsLoading(true)
             const response = await axios.post(`${process.env.REACT_APP_DASHBOARD_API}/weather/data`, {city: city, countryCode: countryCode},
                 {'headers': {'Authorization': `Bearer  ${localStorage.getItem('token')}`}})
-            setData(response.data)
+            if (response.data.error)
+                setIsError(true);
+            else
+                setData(response.data)
             setIsLoading(false)
         } catch (err) {
             if (err.response) {
@@ -25,7 +28,7 @@ export default function Weather() {
         }
     }
 
-    return <Grid container item xs={12}>
+    return <Grid container item xs={12} style={{height: '100%', display: 'block'}}>
         <AlertError isError={isError} setIsError={setIsError}/>
         <CountryFilter handleFilter={handleFilter}/>
         <WeatherSearchDisplay data={data} isLoading={isLoading}/>

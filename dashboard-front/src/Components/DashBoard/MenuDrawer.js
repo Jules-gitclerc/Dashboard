@@ -132,7 +132,7 @@ export default function MenuDrawer({items, handleNewItem, userData, drawerOpen, 
                     <ListItem>
                         <Button startIcon={<AddIcon/>} fullWidth variant={'contained'}
                                 style={{padding: 0, borderRadius: 10}} onClick={() => setOpenMoreService(true)}>
-                            More Service
+                            Service
                         </Button>
                     </ListItem>
                 </List>

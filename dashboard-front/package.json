@@ -19,7 +19,6 @@
     "@testing-library/user-event": "^12.1.10",
     "axios": "^0.21.1",
     "base-64": "^1.0.0",
-    "html-react-parser": "^1.4.0",
     "moment": "^2.29.1",
     "qs": "^6.10.1",
     "react": "^17.0.2",
