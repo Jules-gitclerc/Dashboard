@@ -1,10 +1,10 @@
 import React, {useEffect, useState} from 'react'
-import AlertError from "../../../Tools/AlertError";
+import AlertError from "../../../../Tools/AlertError";
 import axios from "axios";
 import {Autocomplete} from "@mui/lab";
-import {Box, Grid, TextField} from "@mui/material";
+import {Box, TextField} from "@mui/material";
 
-export default function AutocompleteChampion({value, handleChange}) {
+export default function AutocompleteChampion({value, handleChange, filter = ''}) {
     const [data, setData] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
     const [isError, setIsError] = useState(false);
@@ -13,22 +13,21 @@ export default function AutocompleteChampion({value, handleChange}) {
         (async () => {
             try {
                 setIsLoading(true)
-                const response = await axios.get('http://ddragon.leagueoflegends.com/cdn/11.23.1/data/en_US/champion.json');
-                let tab = []
-
-                for (let obj in response.data.data) {
-                    tab.push(response.data.data[obj]);
-                }
-                setData(tab)
+                const response = await axios.get(`${process.env.REACT_APP_DASHBOARD_API}/leagueOfLegend/champion?filter=${filter}`,
+                    {'headers': {'Authorization': `Bearer  ${localStorage.getItem('token')}`}})
+                if (response.data.error)
+                    setData([])
+                else
+                    setData(response.data)
                 setIsLoading(false)
             } catch (err) {
                 setIsLoading(false);
                 setIsError(true)
             }
         })()
-    }, [])
+    }, [filter])
 
-    return <Grid container item xs={12} style={{padding: 10, height: 75}}>
+    return <>
         <AlertError isError={isError} setIsError={setIsError}/>
         <Autocomplete
             disabled={isLoading}
@@ -59,5 +58,5 @@ export default function AutocompleteChampion({value, handleChange}) {
                     autoComplete: 'new-password', // disable autocomplete and autofill
                 }}
             />}
-        /></Grid>
+        /></>
 }

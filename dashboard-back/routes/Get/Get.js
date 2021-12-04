@@ -32,4 +32,5 @@ module.exports = function (app) {
         League of legend
      */
     app.get('/leagueOfLegend/item', token.checkTokenMiddleware, require('./ItemLeagueOfLegend/ItemLeagueOfLegend'));
+    app.get('/leagueOfLegend/champion', token.checkTokenMiddleware, require('./ItemLeagueOfLegend/champion'));
 }

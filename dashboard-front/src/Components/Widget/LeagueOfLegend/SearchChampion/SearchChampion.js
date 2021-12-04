@@ -1,9 +1,9 @@
 import React, {useEffect, useState} from 'react';
 import {Grid} from "@mui/material";
-import AutocompleteChampion from "./AutocompleteChampion";
 import AlertError from "../../../Tools/AlertError";
 import axios from "axios";
 import ChampionDisplay from "./ChampionDisplay";
+import Filter from "./Filter/Filter";
 
 export default function SearchChampion() {
     const [select, setSelect] = useState(null);
@@ -29,7 +29,7 @@ export default function SearchChampion() {
 
     return <Grid container item xs={12} style={{height: '100%', display: 'block'}}>
         <AlertError setIsError={setIsError} isError={isError}/>
-        <AutocompleteChampion handleChange={setSelect} value={select} />
+        <Filter selected={select} setSelected={setSelect}/>
         {select ? <ChampionDisplay data={data} isLoading={isLoading}/> : <Grid container item xs={12} alignItems={'center'} justifyContent={'center'} style={{height: 'calc(100% - 120px)'}}>
             Select one champion for see description
         </Grid>}

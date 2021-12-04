@@ -3,7 +3,7 @@ import {Grid, ListItemButton, ListItemText, List, ListItemAvatar} from "@mui/mat
 import axios from "axios";
 import AlertError from "../../../Tools/AlertError";
 import Filter from "./Filter/Filter";
-import AutocompleteChampion from "../SearchChampion/AutocompleteChampion";
+import AutocompleteChampion from "../SearchChampion/Filter/AutocompleteChampion";
 import DisplayInventoryStat from "./DisplayInventoryStat";
 
 export default function ItemModule() {
