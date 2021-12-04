@@ -38,7 +38,7 @@ export default function ItemModule() {
         <AlertError isError={isError} setIsError={setIsError}/>
         <Filter dataItem={dataItem} setFilter={setFilter} setSearch={setSearch}/>
         <Grid container item xs={12} style={{height: 'calc(100% - 125px)'}}>
-            <Grid container item xs={6} style={{height: '100%', overflow: 'auto'}}>
+            <Grid container item xs={5} style={{height: '100%', overflow: 'auto'}}>
                 <List dense>
                     {dataItem.map(item => {
                         if (filter.length === 0) {
@@ -54,7 +54,8 @@ export default function ItemModule() {
                                              src={`http://ddragon.leagueoflegends.com/cdn/11.23.1/img/item/${item.image.full}`}
                                              style={{height: 40, width: 'auto'}}/>
                                     </ListItemAvatar>
-                                    <ListItemText primary={`${item.name} - cost: ${item.gold.total} 💸`} secondary={item.description}/>
+                                    <ListItemText primary={`${item.name} - cost: ${item.gold.total} 💸`}
+                                                  secondary={item.description}/>
                                 </ListItemButton>
                             else
                                 return null;
@@ -62,18 +63,20 @@ export default function ItemModule() {
                         for (let i in item.tags) {
                             if (filter.find(p => p === item.tags[i])) {
                                 if (item.name.toLocaleLowerCase().includes(search.toLocaleLowerCase()))
-                                    return <ListItemButton disabled={selectItem.length === 6} key={item.id} onClick={() => {
-                                        if (selectItem.length < 6) {
-                                            selectItem.push(item)
-                                            setSelectedItem([...selectItem])
-                                        }
-                                    }}>
+                                    return <ListItemButton disabled={selectItem.length === 6} key={item.id}
+                                                           onClick={() => {
+                                                               if (selectItem.length < 6) {
+                                                                   selectItem.push(item)
+                                                                   setSelectedItem([...selectItem])
+                                                               }
+                                                           }}>
                                         <ListItemAvatar>
                                             <img alt={item.name}
                                                  src={`http://ddragon.leagueoflegends.com/cdn/11.23.1/img/item/${item.image.full}`}
                                                  style={{height: 40, width: 'auto'}}/>
                                         </ListItemAvatar>
-                                        <ListItemText primary={`${item.name} - cost: ${item.gold.total} 💸`} secondary={item.description}/>
+                                        <ListItemText primary={`${item.name} - cost: ${item.gold.total} 💸`}
+                                                      secondary={item.description}/>
                                     </ListItemButton>
                                 else
                                     return null;
@@ -83,9 +86,12 @@ export default function ItemModule() {
                     })}
                 </List>
             </Grid>
-            <Grid container item xs={6}>
-                <AutocompleteChampion value={selectedChampion} handleChange={setSelectedChampion}/>
-                <DisplayInventoryStat dataItem={selectItem} dataChampion={selectedChampion} handleDeleteItem={handleDeleteItem}/>
+            <Grid container item xs={7} style={{height: '100%', display: 'block'}}>
+                <Grid item xs={12} style={{padding: '0px 10px 10px 10px'}}>
+                    <AutocompleteChampion value={selectedChampion} handleChange={setSelectedChampion}/>
+                </Grid>
+                <DisplayInventoryStat dataItem={selectItem} dataChampion={selectedChampion}
+                                      handleDeleteItem={handleDeleteItem}/>
             </Grid>
         </Grid>
     </Grid>

@@ -44,7 +44,7 @@ export const widgetConfig = [
         label: 'Search champion',
         logoService: 'Images/LogoApi/league_of_legends.png',
         icon: <SearchIcon/>,
-        size: {w: 6, h: 5, x: 0, y: Infinity},
+        size: {w: 7, h: 7, x: 0, y: Infinity},
         component: <SearchChampion/>,
     },
     {
@@ -52,7 +52,7 @@ export const widgetConfig = [
         label: 'Search Weather',
         logoService: 'Images/LogoApi/weather.png',
         icon: <SearchIcon/>,
-        size: {w: 6, h: 5, x: 0, y: Infinity},
+        size: {w: 5, h: 5, x: 0, y: Infinity},
         component: <Weather/>,
     },
     {
@@ -60,7 +60,7 @@ export const widgetConfig = [
         label: 'Inventory',
         logoService: 'Images/LogoApi/league_of_legends.png',
         icon: <InventoryIcon/>,
-        size: {w: 6, h: 5, x: 0, y: Infinity},
+        size: {w: 7, h: 6, x: 0, y: Infinity},
         component: <ItemModule/>,
     },
     {
