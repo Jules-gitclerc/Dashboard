@@ -49,9 +49,9 @@ function Diagram({items, setItems, size: {width}}) {
             width={width}
             onLayoutChange={onLayoutChange}
         >
-            {items.map((key) => (
+            {items.map((key, index) => (
                 <div
-                    key={key.idRef}
+                    key={`${key.idRef} - ${index}`}
                     className="widget"
                     data-grid={key.size}
                 >

@@ -28,7 +28,7 @@ export const widgetConfig = [
         label: 'Reddit Posts',
         logoService: 'Images/LogoApi/reddit.png',
         icon: <ImageIcon/>,
-        size: {w: 5, h: 10, x: 0, y: Infinity},
+        size: {w: 6, h: 10, x: 0, y: Infinity},
         component: <Reddit widget={REDDIT_POSTS}/>,
     },
     {
@@ -68,7 +68,7 @@ export const widgetConfig = [
         label: 'Search by date',
         logoService: 'Images/LogoApi/coingeko.png',
         icon: <SearchIcon/>,
-        size: {w: 6, h: 5, x: 0, y: Infinity},
+        size: {w: 4, h: 4, x: 0, y: Infinity},
         component: <CryptoSearchData/>,
     }
 ]

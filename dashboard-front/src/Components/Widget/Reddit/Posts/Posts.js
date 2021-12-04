@@ -174,7 +174,7 @@ export default function Posts({handleConnected}) {
                 }
             }
         })()
-    }, [after, filter, handleConnected]);
+    }, [filter, handleConnected]);
 
 
     return <Grid container item xs={12} style={{height: '100%', display: 'block'}}>

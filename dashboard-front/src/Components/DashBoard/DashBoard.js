@@ -124,6 +124,7 @@ export default function DashBoard({handleTriggerConnected}) {
                 console.log(err);
             }
         })()
+        console.log(model)
         setItems([...items, model]);
     }
 
