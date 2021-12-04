@@ -6,6 +6,7 @@ import Reddit from "./Reddit/Reddit";
 import SearchChampion from "./LeagueOfLegend/SearchChampion/SearchChampion";
 import Weather from "./Weather/Weather";
 import CryptoSearchData from "./Crypto/CryptoSearchByDate";
+import ItemModule from "./LeagueOfLegend/ItemModule/ItemModule";
 
 export const REDDIT = 10
 export const REDDIT_POSTS = 11
@@ -60,7 +61,7 @@ export const widgetConfig = [
         logoService: 'Images/LogoApi/league_of_legends.png',
         icon: <InventoryIcon/>,
         size: {w: 6, h: 5, x: 0, y: Infinity},
-        component: <div> inventory </div>,
+        component: <ItemModule/>,
     },
     {
         id: CRYPTO_SEARCH_BY_DATE,

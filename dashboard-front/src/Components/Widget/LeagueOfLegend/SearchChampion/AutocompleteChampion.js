@@ -36,7 +36,7 @@ export default function AutocompleteChampion({value, handleChange}) {
             options={data}
             getOptionLabel={(option) => option.name}
             autoHighlight
-            sx={{width: 300}}
+            sx={{width: '100%'}}
             onChange={(event, option) => handleChange(option)}
             value={value}
             renderOption={(props, option) => (

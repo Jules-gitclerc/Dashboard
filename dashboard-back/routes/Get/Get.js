@@ -27,4 +27,9 @@ module.exports = function (app) {
      */
     app.get('/weather/country', token.checkTokenMiddleware, require('./Weather/DataWeather'));
     app.post('/weather/data', token.checkTokenMiddleware, require('./Weather/weather'));
+
+    /*
+        League of legend
+     */
+    app.get('/leagueOfLegend/item', token.checkTokenMiddleware, require('./ItemLeagueOfLegend/ItemLeagueOfLegend'));
 }
