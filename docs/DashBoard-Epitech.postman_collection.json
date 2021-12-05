@@ -1,0 +1,964 @@
+{
+	"info": {
+		"_postman_id": "8314338e-e0b0-4168-9974-994f13674966",
+		"name": "DashBoard-Epitech",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "League of legend",
+			"item": [
+				{
+					"name": "By Champion",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://ddragon.leagueoflegends.com/cdn/11.23.1/data/en_US/champion/:championName",
+							"protocol": "http",
+							"host": [
+								"ddragon",
+								"leagueoflegends",
+								"com"
+							],
+							"path": [
+								"cdn",
+								"11.23.1",
+								"data",
+								"en_US",
+								"champion",
+								":championName"
+							],
+							"variable": [
+								{
+									"key": "championName",
+									"value": "Aatrox.json",
+									"description": "Champion name with .json at the end of request"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Champion",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://ddragon.leagueoflegends.com/cdn/11.23.1/data/en_US/champion.json",
+							"protocol": "http",
+							"host": [
+								"ddragon",
+								"leagueoflegends",
+								"com"
+							],
+							"path": [
+								"cdn",
+								"11.23.1",
+								"data",
+								"en_US",
+								"champion.json"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Champion_loading",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": ""
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Spell",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://ddragon.leagueoflegends.com/cdn/11.23.1/img/spell/:summonerName",
+							"protocol": "http",
+							"host": [
+								"ddragon",
+								"leagueoflegends",
+								"com"
+							],
+							"path": [
+								"cdn",
+								"11.23.1",
+								"img",
+								"spell",
+								":summonerName"
+							],
+							"variable": [
+								{
+									"key": "summonerName",
+									"value": "AatroxQ.png",
+									"description": "Spell name with .png at the end"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "item",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://ddragon.leagueoflegends.com/cdn/11.23.1/data/en_US/item.json",
+							"protocol": "http",
+							"host": [
+								"ddragon",
+								"leagueoflegends",
+								"com"
+							],
+							"path": [
+								"cdn",
+								"11.23.1",
+								"data",
+								"en_US",
+								"item.json"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Item image",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://ddragon.leagueoflegends.com/cdn/11.23.1/img/item/:itemId",
+							"protocol": "http",
+							"host": [
+								"ddragon",
+								"leagueoflegends",
+								"com"
+							],
+							"path": [
+								"cdn",
+								"11.23.1",
+								"img",
+								"item",
+								":itemId"
+							],
+							"variable": [
+								{
+									"key": "itemId",
+									"value": "1001.png",
+									"description": ".png at the end"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Weather",
+			"item": [
+				{
+					"name": "Search Weather",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://api.openweathermap.org/data/2.5/weather?q=paris,FR&appid=0144563c0b4b1a1065fde914246dbb87&units=metric",
+							"protocol": "https",
+							"host": [
+								"api",
+								"openweathermap",
+								"org"
+							],
+							"path": [
+								"data",
+								"2.5",
+								"weather"
+							],
+							"query": [
+								{
+									"key": "q",
+									"value": "paris,FR",
+									"description": "city,countryCode"
+								},
+								{
+									"key": "appid",
+									"value": "0144563c0b4b1a1065fde914246dbb87",
+									"description": "api key"
+								},
+								{
+									"key": "units",
+									"value": "metric"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Weather icon",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://openweathermap.org/img/w/:icon",
+							"protocol": "http",
+							"host": [
+								"openweathermap",
+								"org"
+							],
+							"path": [
+								"img",
+								"w",
+								":icon"
+							],
+							"variable": [
+								{
+									"key": "icon",
+									"value": null,
+									"description": "put at the end, .png"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Back",
+			"item": [
+				{
+					"name": "About.json",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/about.json",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"about.json"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "User Data",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "1188570762452-k--SoP74p1mtW9ikYW4gd96DKVnV3g",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/userData",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"userData"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Access Token",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/accessToken",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"accessToken"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Api Reddit Info",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "1188570762452-k--SoP74p1mtW9ikYW4gd96DKVnV3g",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/apiRedditInfo",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"apiRedditInfo"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Google Auth",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/google/O-Auth",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"google",
+								"O-Auth"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Country",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "1188570762452-k--SoP74p1mtW9ikYW4gd96DKVnV3g",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/weather/country",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"weather",
+								"country"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Wethear data",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "1188570762452-k--SoP74p1mtW9ikYW4gd96DKVnV3g",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/weather/data",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"weather",
+								"data"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Account",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/createAccount",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"createAccount"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Login",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/login",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Disconnect",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "1188570762452-k--SoP74p1mtW9ikYW4gd96DKVnV3g",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/disconnect",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"disconnect"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add Widget By User",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "1188570762452-k--SoP74p1mtW9ikYW4gd96DKVnV3g",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/service/widget",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"service",
+								"widget"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Identified",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/identified",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"identified"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "User edit",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "1188570762452-k--SoP74p1mtW9ikYW4gd96DKVnV3g",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/user/edit",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"user",
+								"edit"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "User Services Edit",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "1188570762452-k--SoP74p1mtW9ikYW4gd96DKVnV3g",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/user/services/edit",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"user",
+								"services",
+								"edit"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete widget by user",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/service/widget/:idWidget",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"service",
+								"widget",
+								":idWidget"
+							],
+							"variable": [
+								{
+									"key": "idWidget",
+									"value": null
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "League of legend item",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "1188570762452-k--SoP74p1mtW9ikYW4gd96DKVnV3g",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/leagueOfLegend/item",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"leagueOfLegend",
+								"item"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "League of legend champion",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "1188570762452-k--SoP74p1mtW9ikYW4gd96DKVnV3g",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/leagueOfLegend/champion?filter=",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"leagueOfLegend",
+								"champion"
+							],
+							"query": [
+								{
+									"key": "filter",
+									"value": "",
+									"description": "tags split by ','"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Reddit",
+			"item": [
+				{
+					"name": "authorize",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "https://www.reddit.com/api/v1/authorize?client_id=SjUvT9xx-DqV9ig65JTCmA&response_type=code&redirect_uri=https://www.google.com&duration=temporary&scope=identity+read&state=code_authorize",
+							"protocol": "https",
+							"host": [
+								"www",
+								"reddit",
+								"com"
+							],
+							"path": [
+								"api",
+								"v1",
+								"authorize"
+							],
+							"query": [
+								{
+									"key": "client_id",
+									"value": "SjUvT9xx-DqV9ig65JTCmA"
+								},
+								{
+									"key": "response_type",
+									"value": "code"
+								},
+								{
+									"key": "redirect_uri",
+									"value": "https://www.google.com"
+								},
+								{
+									"key": "duration",
+									"value": "temporary"
+								},
+								{
+									"key": "scope",
+									"value": "identity+read"
+								},
+								{
+									"key": "state",
+									"value": "code_authorize"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "access token",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "ra2dL8KdqufMIiPXfRnMnHeVk0NJCw",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "SjUvT9xx-DqV9ig65JTCmA",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "grant_type",
+									"value": "authorization_code",
+									"type": "text"
+								},
+								{
+									"key": "code",
+									"value": "XAomrL1Nvn_W4yCtCsCzdLa6BdpaNg",
+									"type": "text"
+								},
+								{
+									"key": "redirect_uri",
+									"value": "https://www.google.com",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "https://www.reddit.com/api/v1/access_token",
+							"protocol": "https",
+							"host": [
+								"www",
+								"reddit",
+								"com"
+							],
+							"path": [
+								"api",
+								"v1",
+								"access_token"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Posts",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "1188570762452-k--SoP74p1mtW9ikYW4gd96DKVnV3g",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://oauth.reddit.com/hot?g=GLOBAL&limit=24&sr_detail=true&after=",
+							"protocol": "https",
+							"host": [
+								"oauth",
+								"reddit",
+								"com"
+							],
+							"path": [
+								"hot"
+							],
+							"query": [
+								{
+									"key": "g",
+									"value": "GLOBAL"
+								},
+								{
+									"key": "limit",
+									"value": "24"
+								},
+								{
+									"key": "sr_detail",
+									"value": "true"
+								},
+								{
+									"key": "after",
+									"value": ""
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Search",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "1188570762452-M1cuJfuQyFiagB29AL9WygGvpPYF4A",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "https://oauth.reddit.com/api/search_subreddits?query=l",
+							"protocol": "https",
+							"host": [
+								"oauth",
+								"reddit",
+								"com"
+							],
+							"path": [
+								"api",
+								"search_subreddits"
+							],
+							"query": [
+								{
+									"key": "query",
+									"value": "l"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Crypto",
+			"item": [
+				{
+					"name": "Crypto",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://api.coingecko.com/api/v3/coins/:crytoName/history?date=30-12-2017",
+							"protocol": "https",
+							"host": [
+								"api",
+								"coingecko",
+								"com"
+							],
+							"path": [
+								"api",
+								"v3",
+								"coins",
+								":crytoName",
+								"history"
+							],
+							"query": [
+								{
+									"key": "date",
+									"value": "30-12-2017",
+									"description": "Date of data currency you will be take"
+								}
+							],
+							"variable": [
+								{
+									"key": "crytoName",
+									"value": "bitcoin",
+									"description": "example: bitcoin"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Crypto List",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://api.coingecko.com/api/v3/coins/list?include_platform=false",
+							"protocol": "https",
+							"host": [
+								"api",
+								"coingecko",
+								"com"
+							],
+							"path": [
+								"api",
+								"v3",
+								"coins",
+								"list"
+							],
+							"query": [
+								{
+									"key": "include_platform",
+									"value": "false",
+									"description": "flag to include platform contract addresses (eg. 0x.... for Ethereum based tokens)."
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
