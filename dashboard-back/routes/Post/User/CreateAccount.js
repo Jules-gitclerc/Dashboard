@@ -133,6 +133,7 @@ function identificationMail(mail, userId, username) {
             pass: 'DashEpitechBoard21!'
         }
     });
+    console.log(results);
     const mailOptions = {
         from: 'yodash246@gmail.com',
         to: mail,

@@ -8,6 +8,7 @@ import LoginPage from "./Components/LoginPage/LoginPage";
 import CreateAccount from "./Components/CreateAccount/CreateAccount";
 import Identification from "./Components/Identification/Identification";
 import RedditApi from "./Components/RedditApi/RedditApi";
+import axios from 'axios'
 
 const DashBoard = React.lazy(() => import('./Components/DashBoard/DashBoard'));
 
@@ -27,7 +28,8 @@ function App() {
         (async () => {
             if (localStorage.getItem('token'))
                 try {
-                    //let response = await axios.get(`${process.env.REACT_APP_KEYBOON_API}/auth/isConnected?appVersion=${appVersion}&app=keyboon`, {'headers': {'Authorization': `Bearer  ${process.env.REACT_APP_BEARER || localStorage.getItem('JWT')}`}})
+                    await axios.get(`${process.env.REACT_APP_DASHBOARD_API}/userData`,
+                        {'headers': {'Authorization': `Bearer  ${localStorage.getItem('token')}`}});
                     setIsConnected(true)
                     //setUserData(response.data)
 
