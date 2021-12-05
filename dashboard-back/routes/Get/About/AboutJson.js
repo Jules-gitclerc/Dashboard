@@ -3,7 +3,7 @@ const moment = require('moment');
 module.exports = function(req, res) {
     res.json({
         client: {
-            host: req.connection.remoteAddress.replace(/^.*:/, '')
+            host: req.ip.substr(7)
         },
         server: {
             current_time: moment().unix(),
