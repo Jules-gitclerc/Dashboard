@@ -17,18 +17,23 @@ services:
          - '3307:3307'
 
   back:
+      container_name: back-service
       build: ./dashboard-back
       ports:
         - "8080:8080"
-      links:
-        - mariadb:mariadb
+      volumes:
+        - "./dashboard-back:/app/src"
       depends_on:
         - mariadb
 
   front:
+      container_name: front-service
       build: ./dashboard-front
       ports:
         - "3000:3000"
+      volumes:
+        - "./dashboard-front/src:/app/src"
 
 volumes:
   db-data:
+
