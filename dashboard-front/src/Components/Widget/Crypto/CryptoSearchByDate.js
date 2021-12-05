@@ -1,66 +1,94 @@
 import React, {useEffect, useState} from 'react';
-import {CircularProgress, Grid, Paper, Typography} from "@mui/material";
+import {CircularProgress, Grid, Paper, Typography, FormControl, InputLabel, Select, MenuItem} from "@mui/material";
 import AutocompleteCryto from "./AutocompleteCrypto";
 import DPicker from "./DPicker";
 import axios from 'axios';
 import moment from 'moment';
 
 function DisplayCurrency({data, isLoading}) {
+    const [dataSelect, setDataSelect] = useState([]);
+    const [selected, setSelected] = useState('eur');
+
+    useEffect(() => {
+        if (data && data.market_data) {
+            let tab = []
+
+            for (let index in data.market_data.current_price) {
+                tab.push(index)
+            }
+            setDataSelect(tab);
+        }
+    }, [data])
+
     if (isLoading)
-        return <Grid container item xs={12} style={{padding: 10, height: 'calc(100% - 125px)'}} justifyContent={'center'} alignItems={'center'}>
+        return <Grid container item xs={12} style={{padding: 10, height: 'calc(100% - 125px)'}}
+                     justifyContent={'center'} alignItems={'center'}>
             <CircularProgress/>
         </Grid>
 
     if (!data)
-        return <Grid container item xs={12} style={{padding: 10, height: 'calc(100% - 125px)'}} justifyContent={'center'} alignItems={'center'}>
+        return <Grid container item xs={12} style={{padding: 10, height: 'calc(100% - 125px)'}}
+                     justifyContent={'center'} alignItems={'center'}>
             No Data Selected
         </Grid>
 
-    return <Grid container item xs={12} justifyContent={'space-around'} alignItems={'center'} spacing={2} style={{padding: 10}}>
-        <Grid item xs={4}>
-            <Paper style={{width: '100%', margin: 10}}>
-                <Grid item xs={12}>
-                    <Grid item xs={4}>
-                        <img alt={data.id} src={data.image.small} style={{width: '100%', height: 'auto'}}/>
-                    </Grid>
-                    <Grid item xs={8}>
+    const handleChange = (event) => {
+        setSelected(event.target.value);
+    };
+
+    return <Grid container item xs={12} justifyContent={'space-around'} alignItems={'center'} spacing={2}
+                 style={{padding: 10, height: 'calc(100% - 125px)'}}>
+        <Grid item xs={3} container alignItems={'center'} style={{display: 'block'}}>
+            <Grid item xs={12}>
+                <FormControl fullWidth>
+                    <InputLabel>Currency</InputLabel>
+                    <Select
+                        value={selected}
+                        label="Currenc"
+                        onChange={handleChange}
+                    >
+                        {dataSelect.map(item => <MenuItem key={item} value={item}>{item}</MenuItem>)}
+                    </Select>
+                </FormControl>
+            </Grid>
+            <Grid item xs={12}>
+                <img alt={data.id} src={data.image.small} style={{width: '100%', height: 'auto'}}/>
+            </Grid>
+        </Grid>
+        {!data.market_data && <Grid item xs={9} container alignItems={'space-around'} justifyContent={'center'}>
+            No market data from this date
+        </Grid>}
+        <Grid item xs={9} container alignItems={'space-around'}>
+            {data.market_data && <Grid item xs={12}>
+                <Paper style={{width: '100%', margin: 10}}>
+                    <Grid container item xs={12} justifyContent={'center'}>
                         Current Price
                     </Grid>
-                </Grid>
-                <Grid item xs={12}>
-                    <Typography>{data.market_data.current_price.eur}</Typography>
-                </Grid>
-            </Paper>
-        </Grid>
-        <Grid item xs={4}>
-            <Paper style={{width: '100%', margin: 10}}>
-                <Grid item xs={12}>
-                    <Grid item xs={4}>
-                        <img alt={data.id} src={data.image.small} style={{width: '100%', height: 'auto'}}/>
+                    <Grid container item xs={12} justifyContent={'center'}>
+                        <Typography>{data.market_data.current_price[selected]} {selected}</Typography>
                     </Grid>
-                    <Grid item xs={8}>
+                </Paper>
+            </Grid>}
+            {data.market_data && <Grid item xs={12}>
+                <Paper style={{width: '100%', margin: 10}}>
+                    <Grid container item xs={12} justifyContent={'center'}>
                         Market Cap
                     </Grid>
-                </Grid>
-                <Grid item xs={12}>
-                    <Typography>{data.market_data.market_cap.eur}</Typography>
-                </Grid>
-            </Paper>
-        </Grid>
-        <Grid item xs={4}>
-            <Paper style={{width: '100%', margin: 10}}>
-                <Grid item xs={12}>
-                    <Grid item xs={4}>
-                        <img alt={data.id} src={data.image.small} style={{width: '100%', height: 'auto'}}/>
+                    <Grid container item xs={12} justifyContent={'center'}>
+                        <Typography>{data.market_data.market_cap[selected]} {selected}</Typography>
                     </Grid>
-                    <Grid item xs={8}>
+                </Paper>
+            </Grid>}
+            {data.market_data && <Grid item xs={12}>
+                <Paper style={{width: '100%', margin: 10}}>
+                    <Grid container item xs={12} justifyContent={'center'}>
                         Total Volume
                     </Grid>
-                </Grid>
-                <Grid item xs={12}>
-                    <Typography>{data.market_data.total_volume.eur}</Typography>
-                </Grid>
-            </Paper>
+                    <Grid container item xs={12} justifyContent={'center'}>
+                        <Typography>{data.market_data.total_volume[selected]} {selected}</Typography>
+                    </Grid>
+                </Paper>
+            </Grid>}
         </Grid>
     </Grid>
 }

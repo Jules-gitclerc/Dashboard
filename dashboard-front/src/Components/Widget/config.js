@@ -68,7 +68,7 @@ export const widgetConfig = [
         label: 'Search by date',
         logoService: 'Images/LogoApi/coingeko.png',
         icon: <SearchIcon/>,
-        size: {w: 4, h: 4, x: 0, y: Infinity},
+        size: {w: 4, h: 5, x: 0, y: Infinity},
         component: <CryptoSearchData/>,
     }
 ]
