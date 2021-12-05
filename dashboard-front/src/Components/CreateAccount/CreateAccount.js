@@ -73,7 +73,7 @@ export default function CreateAccount({handleTriggerConnected}) {
         serviceConfig.forEach((elem) => {
             pages.push({
                 name: elem.label,
-                logo: elem.logo,
+                logoService: elem.logoService,
                 id: elem.id,
                 checked: true,
             })
@@ -128,7 +128,7 @@ export default function CreateAccount({handleTriggerConnected}) {
                 setIsLoading(true)
                 const response = await axios.post(`${process.env.REACT_APP_DASHBOARD_API}/createAccount`, body);
                 if (response.data.error) {
-                    setIsError(true); // et le catch dans l'histoire ?
+                    setIsError(true);
                 } else {
                     localStorage.setItem('token', response.data.access_token);
                     setIsSend(true);
