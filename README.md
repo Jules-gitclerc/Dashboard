@@ -1,11 +1,13 @@
-#B-DEV-500-LIL-5-1-DashBoard
+# **Dashboard Epitech**
 
-##Our team
+## **Authors**
 
-Damien Maillard - Jules Clerc
+- damien.maillard@epitech.eu
+- jules.clerc@epitech.eu
 
 
-##Description
+## **Project description**
+
 The purpose of this project is to familiarize you with the software platform you have chosen (Java, .NET, node.js) through the creation of a dashboard.
 To do this, you need to implement a web application that works like Netvibes.
 
@@ -15,7 +17,7 @@ To do this, you need to implement a web application that works like Netvibes.
 * [Postman Docs](docs/DashBoard-Epitech.postman_collection.json)
 
 
-##Usage
+## **Development and Build**
 
 For starting project architecture, please execute this command:
 ``docker-compose up``
@@ -24,7 +26,7 @@ For stop project architecture, please execute this command:
 ``docker-compose down``
 
 
-##Technologies
+## **Technologies**
 
 react-JS for the front and nodeJs for the back-end.
 Mariadb has been taken for database development.
